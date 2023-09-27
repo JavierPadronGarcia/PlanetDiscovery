@@ -1,0 +1,7 @@
+{
+  "name": "PlanetsDisovery",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
