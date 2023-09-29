@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlanetService } from '../services/planet.service';
 
-
-
 @Component({
   selector: 'app-planet-list',
   templateUrl: './planet-list.page.html',
@@ -12,15 +10,27 @@ export class PlanetListPage implements OnInit {
 
   planetName!: string;
   planetDiscoveryDate!: string
-
   planets: any = [];
   idToUpdate: number = 0;
+  iconName: string = 'chevron-down';
+
+  isOpen: boolean = false;
+  iconUp: string = 'chevron-up';
+  iconDown: string = 'chevron-down';
+
 
   constructor(private planetService: PlanetService) { }
 
   ngOnInit() {
     this.getAllPlanets();
-    
+  }
+
+  changeIcon() {
+    this.iconName = this.iconName == this.iconDown ? this.iconUp : this.iconDown
+  }
+
+  showSatellites() {
+
   }
 
   getAllPlanets() {
@@ -50,7 +60,7 @@ export class PlanetListPage implements OnInit {
   }
 
   updatePlanet() {
-    let planet = {
+    const planet = {
       name: this.planetName,
       discoveryDate: this.planetDiscoveryDate
     }
@@ -70,7 +80,7 @@ export class PlanetListPage implements OnInit {
   //format the date to DD-MM-YYYY
   formatDate(date: string) {
     const dateToChange = new Date(date);
-    const day = (dateToChange.getDate()+1).toString().padStart(2, '0');
+    const day = (dateToChange.getDate() + 1).toString().padStart(2, '0');
     const month = (dateToChange.getMonth() + 1).toString().padStart(2, '0');
     const year = dateToChange.getFullYear().toString().padStart(2, '0');
 
@@ -80,11 +90,10 @@ export class PlanetListPage implements OnInit {
   //format the date to YYYY-MM-DD
   revertFormatDate(date: string) {
     const dateToChange = new Date(date);
-    const day = (dateToChange.getDate()+1).toString().padStart(2, '0');
+    const day = (dateToChange.getDate() + 1).toString().padStart(2, '0');
     const month = (dateToChange.getMonth() + 1).toString().padStart(2, '0');
     const year = dateToChange.getFullYear().toString().padStart(2, '0');
 
     return `${year}-${month}-${day}`;
   }
-
 }
