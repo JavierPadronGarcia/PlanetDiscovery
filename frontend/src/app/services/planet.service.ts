@@ -23,14 +23,14 @@ export class PlanetService {
   add(planet: any) {
     let body = new URLSearchParams();
     body.append("name", planet.name);
-    body.append("discoveryDate", planet.discoveryDate.toString());
+    body.append("composition", planet.composition);
     return this.httpClient.post(endPoint, body, httpOptions);
   }
 
-  update(planet: any, id:number){
+  update(planet: any, id: number) {
     let body = new URLSearchParams();
     body.append("name", planet.name);
-    body.append("discoveryDate", planet.discoveryDate.toString());
+    body.append("composition", planet.composition);
     return this.httpClient.put(endPoint + `/${id}`, body, httpOptions);
   }
 

@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PlanetService } from '../services/planet.service';
+
+interface Planet {
+  name: string;
+  composition: string;
+}
 
 @Component({
   selector: 'app-planet-list',
@@ -7,26 +13,41 @@ import { PlanetService } from '../services/planet.service';
   styleUrls: ['./planet-list.page.scss'],
 })
 export class PlanetListPage implements OnInit {
-
+  ionicForm: FormGroup;
   planetName!: string;
-  planetDiscoveryDate!: string
+  planetComposition!: string
   planets: any = [];
   idToUpdate: number = 0;
-  iconName: string = 'chevron-down';
 
-  isOpen: boolean = false;
+  iconName: string = 'chevron-down';
   iconUp: string = 'chevron-up';
   iconDown: string = 'chevron-down';
+  isOpen: boolean = false;
+
+  showAddButton: boolean = true;
+  showUpdateButtons: boolean = false;
 
 
-  constructor(private planetService: PlanetService) { }
+
+  constructor(private planetService: PlanetService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getAllPlanets();
+
+    this.ionicForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      composition: ['', [Validators.required, Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
+      ],
+    });
   }
 
-  changeIcon() {
-    this.iconName = this.iconName == this.iconDown ? this.iconUp : this.iconDown
+  get errorControl() {
+    return this.ionicForm.controls;
+  }
+
+  changeIcon(id: number) {
+    const icon: any = document.getElementById(`${id}`)
+    icon.name = icon.name == this.iconDown ? this.iconUp : this.iconDown
   }
 
   showSatellites() {
@@ -36,38 +57,41 @@ export class PlanetListPage implements OnInit {
   getAllPlanets() {
     this.planetService.getAll().subscribe(response => {
       this.planets = response;
+      console.log(this.planets)
     })
   }
 
   insertPlanet() {
-    const name = document.getElementById("name") as HTMLInputElement;
-    const discoveryDate = document.getElementById("date") as HTMLInputElement;
-    let planet = {
-      name: name.value,
-      discoveryDate: this.revertFormatDate(discoveryDate.value)
+    let planet: Planet = {
+      name: this.planetName,
+      composition: this.planetComposition
     }
     this.planetService.add(planet).subscribe(response => {
       this.getAllPlanets();
+      this.planetName = "";
+      this.planetComposition = "";
     });
   }
 
   putInfoInForm(planet: any) {
     this.idToUpdate = planet.id;
-    (document.getElementById("add-button") as HTMLButtonElement).style.display = "none";
-    (document.getElementById("confirm-update-button") as HTMLButtonElement).style.display = "block";
+    this.showAddButton = false;
+    this.showUpdateButtons = true;
+
     this.planetName = planet.name;
-    this.planetDiscoveryDate = planet.discoveryDate;
+    this.planetComposition = planet.composition;
   }
 
   updatePlanet() {
-    const planet = {
+    const planet: Planet = {
       name: this.planetName,
-      discoveryDate: this.planetDiscoveryDate
+      composition: this.planetComposition
     }
     this.planetService.update(planet, this.idToUpdate).subscribe(response => {
       this.getAllPlanets();
-      (document.getElementById("add-button") as HTMLButtonElement).style.display = "inline-block";
-      (document.getElementById("confirm-update-button") as HTMLButtonElement).style.display = "none";
+      this.showAddButton = true;
+      this.showUpdateButtons = false;
+      this.clearForm();
     })
   }
 
@@ -77,23 +101,10 @@ export class PlanetListPage implements OnInit {
     })
   }
 
-  //format the date to DD-MM-YYYY
-  formatDate(date: string) {
-    const dateToChange = new Date(date);
-    const day = (dateToChange.getDate() + 1).toString().padStart(2, '0');
-    const month = (dateToChange.getMonth() + 1).toString().padStart(2, '0');
-    const year = dateToChange.getFullYear().toString().padStart(2, '0');
-
-    return `${day}-${month}-${year}`;
-  }
-
-  //format the date to YYYY-MM-DD
-  revertFormatDate(date: string) {
-    const dateToChange = new Date(date);
-    const day = (dateToChange.getDate() + 1).toString().padStart(2, '0');
-    const month = (dateToChange.getMonth() + 1).toString().padStart(2, '0');
-    const year = dateToChange.getFullYear().toString().padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
+  clearForm() {
+    this.planetName = "";
+    this.planetComposition = "";
+    this.showAddButton = true;
+    this.showUpdateButtons = false;
   }
 }

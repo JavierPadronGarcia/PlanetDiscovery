@@ -18,7 +18,7 @@ public class Planet implements Serializable {
 	long id;
 
 	String name;
-	String discoveryDate;
+	String composition;
 
 	public long getId() {
 		return id;
@@ -36,18 +36,18 @@ public class Planet implements Serializable {
 		this.name = name;
 	}
 
-	public String getDiscoveryDate() {
-		return discoveryDate;
+	public String getComposition() {
+		return composition;
 	}
 
-	public void setDiscoveryDate(String discoveryDate) {
-		this.discoveryDate = discoveryDate;
+	public void setComposition(String composition) {
+		this.composition = composition;
 	}
 
-	public Planet(String name, String discoveryDate) {
+	public Planet(String name, String composition) {
 		super();
 		this.name = name;
-		this.discoveryDate = discoveryDate;
+		this.composition = composition;
 	}
 
 	public Planet() {
