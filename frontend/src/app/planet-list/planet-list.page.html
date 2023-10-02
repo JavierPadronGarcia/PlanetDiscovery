@@ -45,7 +45,7 @@
         <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
       </ion-col>
     </ion-row>
-  </form> 
+  </form>
 
   <ion-list>
     <ion-item *ngFor="let p of planets">
@@ -53,9 +53,15 @@
       <label>
         <h2>{{p.name}}</h2>
         <p>{{p.composition}}</p>
+        <p>{{p.id}}</p>
+        <!-- {{getSatellitesByPlanet(p.id)}} -->
         <ion-button block color="primary" (click)="deletePlanet(p.id)">eliminar</ion-button>
         <ion-button block color="primary" (click)="putInfoInForm(p)">actualizar</ion-button>
+        <!-- <label *ngFor="let s of satellites">
+          <p>{{s.name}}</p>
+        </label> -->
       </label>
     </ion-item>
   </ion-list>
+
 </ion-content>

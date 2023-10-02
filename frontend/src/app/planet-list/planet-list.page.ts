@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PlanetService } from '../services/planet.service';
+import { SatelliteService } from '../services/satellite.service';
 
 interface Planet {
   name: string;
@@ -17,6 +18,7 @@ export class PlanetListPage implements OnInit {
   planetName!: string;
   planetComposition!: string
   planets: any = [];
+  satellites: any = [];
   idToUpdate: number = 0;
 
   iconName: string = 'chevron-down';
@@ -29,7 +31,7 @@ export class PlanetListPage implements OnInit {
 
 
 
-  constructor(private planetService: PlanetService, public formBuilder: FormBuilder) { }
+  constructor(private planetService: PlanetService, private satelliteService: SatelliteService, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getAllPlanets();
@@ -50,8 +52,11 @@ export class PlanetListPage implements OnInit {
     icon.name = icon.name == this.iconDown ? this.iconUp : this.iconDown
   }
 
-  showSatellites() {
 
+  getSatellitesByPlanet(id: number) {
+    this.satelliteService.getAllByPlanet(id).subscribe(response =>{
+      this.satellites = response;
+    });
   }
 
   getAllPlanets() {
