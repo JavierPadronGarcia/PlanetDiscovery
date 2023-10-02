@@ -1,20 +1,15 @@
 package com.javier.backend.entity.model;
 
-import java.io.Serializable;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "planet")
-public class Planet implements Serializable {
+@Table(name = "satellite")
+public class Satellite {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,10 +20,9 @@ public class Planet implements Serializable {
 	private String name;
 	private String composition;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "planet")
-	private List<Satellite> satellites;
-	
+	@ManyToOne
+	private Planet planet;
+
 	public long getId() {
 		return id;
 	}
@@ -53,22 +47,23 @@ public class Planet implements Serializable {
 		this.composition = composition;
 	}
 
-	public List<Satellite> getSatellites() {
-		return satellites;
+	public Planet getPlanet() {
+		return planet;
 	}
 
-	public void setSatellites(List<Satellite> satellites) {
-		this.satellites = satellites;
+	public void setPlanet(Planet planet) {
+		this.planet = planet;
 	}
 
-	public Planet(String name, String composition) {
+	public Satellite(long id, String name, String composition) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.composition = composition;
 	}
 
-	public Planet() {
-		
+	public Satellite() {
+
 	}
 
 }
