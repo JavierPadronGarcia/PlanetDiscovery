@@ -78,10 +78,7 @@ export class PlanetListPage implements OnInit {
           this.getSatellitesByPlanet(planet.id).subscribe(response => {
             let satVisibility = this.satelliteVisibility[planet.id]
             this.satellites[planet.id] = response
-
-            satVisibility = (satVisibility == undefined) || (this.satellites[planet.id].length == 0) ? false : true
-
-            this.satelliteVisibility[planet.id] = satVisibility
+            this.satelliteVisibility[planet.id] = (satVisibility == undefined) || (this.satellites[planet.id].length == 0) ? false : true
           })
 
 

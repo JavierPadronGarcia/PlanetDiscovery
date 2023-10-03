@@ -42,4 +42,13 @@ public class SatelliteServiceImpl implements ISatelliteService {
 		satelliteDao.save(satellite);
 	}
 
+	@Override
+	public void update(Satellite satellite, long idSat, long idPlanet) {
+		Planet planet = planetDao.findById(idPlanet).get();
+		satellite.setId(idSat);
+		satellite.setPlanet(planet);
+		satelliteDao.save(satellite);
+	}
+
+
 }

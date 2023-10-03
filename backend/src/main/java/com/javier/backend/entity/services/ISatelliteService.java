@@ -13,4 +13,6 @@ public interface ISatelliteService {
 
 	void delete(long id);
 
+	void update(Satellite satellite, long idSat, long idPlanet);
+
 }

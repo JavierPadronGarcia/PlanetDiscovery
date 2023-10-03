@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javier.backend.entity.model.Planet;
@@ -33,9 +34,12 @@ public class SatelliteController {
 	
 	@PostMapping("/satellite/planet_id/{id}")
 	public void addSatellite(Satellite satellite, @PathVariable("id") long id) {
-		System.out.println("holllllllllllllllllllllllllllllaaaaaaaaaaaaaaaaaaaaaaa");
-		System.out.println(id);
 		satelliteService.add(satellite, id);
+	}
+	
+	@PutMapping("/satellite/planet_id/{id}")
+	public void updateSatellite(Satellite satellite, long idSat, @PathVariable("id") long idPlanet) {
+		satelliteService.update(satellite, idSat, idPlanet);
 	}
 	
 	@DeleteMapping("/satellite/{id}")
