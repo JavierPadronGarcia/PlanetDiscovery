@@ -1,15 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Lista de planetas</ion-title>
+    <ion-title size="large">Agregar planetas</ion-title>
+    <ion-button (click)="backToHome()">dejar de modificar</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">planet-list</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
     <ion-item lines="full">
@@ -42,6 +38,7 @@
     <ion-row>
       <ion-col>
         <ion-button type="submit" *ngIf="showAddButton">Confirmar</ion-button>
+        <ion-button (click)="addSatellite()" *ngIf="showAddSatButton">Confirmar</ion-button>
         <ion-button (click)="updateSatellite()" *ngIf="showUpdateSatellite">Actualizar</ion-button>
         <ion-button (click)="updatePlanet()" *ngIf="showUpdateButtons">Actualizar</ion-button>
         <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
@@ -57,7 +54,7 @@
         <p>{{p.composition}}</p>
         <ion-button block color="primary" (click)="deletePlanet(p.id)">eliminar</ion-button>
         <ion-button block color="primary" (click)="putInfoInForm(p)">actualizar</ion-button>
-
+        <ion-icon name="add-circle-outline" (click)="changeFormAddSatellite(p.id)"></ion-icon>
 
         <div *ngIf="satelliteVisibility[p.id]">
           <ion-item *ngFor="let sat of satellites[p.id]">

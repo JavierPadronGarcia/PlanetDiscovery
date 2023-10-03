@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonTitle } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PlanetService } from '../services/planet.service';
 import { SatelliteService } from '../services/satellite.service';
+import { Router } from '@angular/router';
 
 interface Planet {
   name: string;
@@ -15,12 +17,14 @@ interface Planet {
 })
 export class PlanetListPage implements OnInit {
 
+  @ViewChild(IonTitle, { static: true }) ionTitle: IonTitle;
   satelliteVisibility: any = {};
-
   ionicForm: FormGroup;
+  title: any;
   planets: any = [];
   satellites: any = {};
   idToUpdate: number = 0;
+  planetId: number = 0;
 
   iconName: string = 'chevron-down';
   iconUp: string = 'chevron-up';
@@ -32,19 +36,21 @@ export class PlanetListPage implements OnInit {
   showUpdateSatellite: boolean = false;
   showAddSatellite: boolean = false;
   showSatellites: boolean = false;
+  showAddSatButton: boolean = false;
 
   constructor(private planetService: PlanetService,
     private satelliteService: SatelliteService,
-    public formBuilder: FormBuilder) { }
+    public formBuilder: FormBuilder,
+    private router: Router) { }
 
   ngOnInit() {
     this.getAllPlanets();
+    this.title = document.querySelector("ion-title")?.innerText;
     this.ionicForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       composition: ['', [Validators.required, Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
       ],
     });
-
   }
 
   get errorControl() {
@@ -135,5 +141,13 @@ export class PlanetListPage implements OnInit {
     this.ionicForm.get("composition")?.setValue("")
     this.showAddButton = true;
     this.showUpdateButtons = false;
+  }
+
+  changeFormAddSatellite(planetId: number) {
+    
+  }
+
+  backToHome() {
+    this.router.navigateByUrl('/');
   }
 }
