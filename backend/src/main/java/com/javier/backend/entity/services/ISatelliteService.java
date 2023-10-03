@@ -7,4 +7,5 @@ import com.javier.backend.entity.model.Satellite;
 public interface ISatelliteService {
 	List<Satellite> findAll();
 	List<Satellite> findAllByPlanet(long id);
+	void delete(long id);
 }

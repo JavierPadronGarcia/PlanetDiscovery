@@ -73,7 +73,6 @@ export class PlanetListPage implements OnInit {
         this.satelliteVisibility[planet.id] = false
       });
     })
-    return undefined
   }
 
   insertPlanet() {
@@ -110,6 +109,12 @@ export class PlanetListPage implements OnInit {
   deletePlanet(id: number) {
     this.planetService.delete(id).subscribe(response => {
       this.getAllPlanets();
+    })
+  }
+
+  deleteSatellite(satelliteId: number, planetId: number) {
+    this.satelliteService.delete(satelliteId).subscribe(response => {
+      this.getAllPlanets()
     })
   }
 

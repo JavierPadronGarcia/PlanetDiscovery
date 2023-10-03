@@ -24,4 +24,9 @@ public class SatelliteServiceImpl implements ISatelliteService {
 		return satelliteDao.findAllByPlanet(id);
 	}
 
+	@Override
+	public void delete(long id) {
+		satelliteDao.deleteById(id);
+	}
+
 }

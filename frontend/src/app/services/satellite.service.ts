@@ -23,4 +23,8 @@ export class SatelliteService {
   getAllByPlanet(id: number) {
     return this.httpClient.get(`${endPoint}/planet_id/${id}`);
   }
+
+  delete(id: number) {
+    return this.httpClient.delete(`${endPoint}/${id}`);
+  }
 }

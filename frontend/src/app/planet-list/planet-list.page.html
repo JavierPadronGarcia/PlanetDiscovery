@@ -42,7 +42,7 @@
     <ion-row>
       <ion-col>
         <ion-button type="submit" *ngIf="showAddButton">Confirmar</ion-button>
-        <ion-button (click)="updateSatellite" *ngIf="showUpdateSatellite">Actualizar</ion-button>
+        <ion-button (click)="updateSatellite()" *ngIf="showUpdateSatellite">Actualizar</ion-button>
         <ion-button (click)="updatePlanet()" *ngIf="showUpdateButtons">Actualizar</ion-button>
         <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
       </ion-col>
@@ -51,7 +51,7 @@
 
   <ion-list>
     <ion-item *ngFor="let p of planets">
-      <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)"></ion-icon>
+      <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)" />
       <label>
         <h2>{{p.name}}</h2>
         <p>{{p.composition}}</p>
@@ -64,7 +64,7 @@
             <label *ngIf="sat.length != 0">
               <p> {{ sat.name }}</p>
               <p>{{ sat.composition }}</p>
-              <ion-button block color="primary" (click)="deleteSatellite(sat.id)">eliminar</ion-button>
+              <ion-button block color="primary" (click)="deleteSatellite(sat.id, p.id)">eliminar</ion-button>
               <ion-button block color="primary" (click)="updateSatellite(sat)">actualizar</ion-button>
             </label>
           </ion-item>
