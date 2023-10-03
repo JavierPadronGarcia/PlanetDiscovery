@@ -144,7 +144,12 @@ export class PlanetListPage implements OnInit {
   }
 
   changeFormAddSatellite(planetId: number) {
-    
+    this.planetService.getOne(planetId).subscribe((response: any) => {
+      const title = document.getElementById("title")
+      if (title != undefined) {
+        title.innerText = `Agregar Satélites para el planeta ${response.name}`
+      }
+    })
   }
 
   backToHome() {

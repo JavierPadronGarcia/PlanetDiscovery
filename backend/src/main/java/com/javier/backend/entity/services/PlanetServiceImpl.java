@@ -37,8 +37,7 @@ public class PlanetServiceImpl implements IPlanetService {
 
 	@Override
 	public Planet get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return planetDao.findById(id).get();
 	}
 
 }

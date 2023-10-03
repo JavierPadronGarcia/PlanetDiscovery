@@ -38,8 +38,6 @@ public class SatelliteServiceImpl implements ISatelliteService {
 	@Override
 	public void add(Satellite satellite, long id) {
 		Planet planet = planetDao.findById(id).get();
-		System.out.println("adioooooooooooooooooooooooooooooooooooooooooooossssssssssssss");
-		System.out.println(planet.getId());
 		satellite.setPlanet(planet);
 		satelliteDao.save(satellite);
 	}

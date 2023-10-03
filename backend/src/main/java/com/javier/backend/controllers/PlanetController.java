@@ -25,7 +25,8 @@ public class PlanetController {
 		return planetService.getAll();
 	}
 
-	public Planet get(long id) {
+	@GetMapping("/planet/{id}")
+	public Planet get(@PathVariable(value = "id") long id) {
 		return planetService.get(id);
 	}
 

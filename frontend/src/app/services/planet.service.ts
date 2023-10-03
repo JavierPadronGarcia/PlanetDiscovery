@@ -20,6 +20,10 @@ export class PlanetService {
     return this.httpClient.get(endPoint);
   }
 
+  getOne(id: number){
+    return this.httpClient.get(`${endPoint}/${id}`);
+  }
+
   add(planet: any) {
     let body = new URLSearchParams();
     body.append("name", planet.name);
