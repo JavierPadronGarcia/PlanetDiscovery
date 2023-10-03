@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title size="large" id="title">Agregar planetas</ion-title>
-    <ion-button (click)="backToHome()">dejar de modificar</ion-button>
+    <ion-title size="large" id="title">Modificación de planetas</ion-title>
+    <ion-button (click)="backToHome()">Ir a la lista</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -37,38 +37,58 @@
     </div>
     <ion-row>
       <ion-col>
+        <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
         <ion-button type="submit" *ngIf="showAddButton">Confirmar</ion-button>
         <ion-button (click)="addSatellite()" *ngIf="showAddSatButton">Confirmar</ion-button>
         <ion-button (click)="updateSatellite()" *ngIf="showUpdateSatellite">Actualizar</ion-button>
         <ion-button (click)="updatePlanet()" *ngIf="showUpdateButtons">Actualizar</ion-button>
-        <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
       </ion-col>
     </ion-row>
   </form>
 
-  <ion-list>
+  <ion-list *ngIf="planets.length >1">
     <ion-item *ngFor="let p of planets">
-      <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)" />
+      <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)"></ion-icon>
       <label>
-        <h2>{{p.name}}</h2>
-        <p>{{p.composition}}</p>
+        <div>
+          <h2>{{p.name}}</h2>
+          <p>composición: {{p.composition}}</p>
+          <div>
+            <ion-button (click)="changeFormAddSatellite(p.id)" shape="round">
+              Modificar Lunas
+            </ion-button>
+          </div>
+        </div>
+
         <ion-button block color="primary" (click)="deletePlanet(p.id)">eliminar</ion-button>
         <ion-button block color="primary" (click)="putInfoInForm(p)">actualizar</ion-button>
-        <ion-icon name="add-circle-outline" (click)="changeFormAddSatellite(p.id)"></ion-icon>
 
         <div *ngIf="satelliteVisibility[p.id]">
           <ion-item *ngFor="let sat of satellites[p.id]">
             <label *ngIf="sat.length != 0">
-              <p> {{ sat.name }}</p>
-              <p>{{ sat.composition }}</p>
-              <ion-button block color="primary" (click)="deleteSatellite(sat.id, p.id)">eliminar</ion-button>
-              <ion-button block color="primary" (click)="updateSatellite(sat)">actualizar</ion-button>
+              <h2>{{ sat.name }}</h2>
+              <p>composición: {{ sat.composition }}</p>
             </label>
           </ion-item>
         </div>
-
       </label>
     </ion-item>
   </ion-list>
+
+  <div *ngIf="showSatellitesPlanetDetail">
+    <ion-button (click)="revert()" expand="block" fill="clear" shape="round">
+      volver
+    </ion-button>
+    <h3>Lunas del planeta {{planets.name}}</h3>
+    <ion-item *ngFor="let sat of satellites[planets.id]">
+      <label *ngIf="sat.length != 0">
+        <h2>{{ sat.name }}</h2>
+        <p>composición: {{ sat.composition }}</p>
+        <ion-button block color="primary" (click)="deleteSatellite(sat.id, planets.id)">eliminar</ion-button>
+        <ion-button block color="primary" (click)="updateSatellite(sat)">actualizar</ion-button>
+      </label>
+    </ion-item>
+
+  </div>
 
 </ion-content>

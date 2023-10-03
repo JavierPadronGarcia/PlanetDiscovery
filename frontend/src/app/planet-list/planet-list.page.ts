@@ -37,6 +37,7 @@ export class PlanetListPage implements OnInit {
   showAddSatellite: boolean = false;
   showSatellites: boolean = false;
   showAddSatButton: boolean = false;
+  showSatellitesPlanetDetail: boolean = false;
 
   constructor(private planetService: PlanetService,
     private satelliteService: SatelliteService,
@@ -69,15 +70,22 @@ export class PlanetListPage implements OnInit {
   }
 
   getAllPlanets() {
+    this.showSatellitesPlanetDetail = false
     this.planetService.getAll().subscribe(response => {
       this.planets = response;
-      this.planets.sort((a: any, b: any) => a.id - b.id);
-      this.planets.map((planet: any) => {
-        this.getSatellitesByPlanet(planet.id).subscribe(response => {
-          this.satellites[planet.id] = response
-        })
-        this.satelliteVisibility[planet.id] = false
-      });
+      this.planets.sort((a: any, b: any) => a.id - b.id)
+        .map((planet: any) => {
+          this.getSatellitesByPlanet(planet.id).subscribe(response => {
+            let satVisibility = this.satelliteVisibility[planet.id]
+            this.satellites[planet.id] = response
+
+            satVisibility = (satVisibility == undefined) || (this.satellites[planet.id].length == 0) ? false : true
+
+            this.satelliteVisibility[planet.id] = satVisibility
+          })
+
+
+        });
     })
   }
 
@@ -147,12 +155,24 @@ export class PlanetListPage implements OnInit {
     this.planetService.getOne(planetId).subscribe((response: any) => {
       const title = document.getElementById("title")
       if (title != undefined) {
-        title.innerText = `Agregar Satélites para el planeta ${response.name}`
+        title.innerText = `Modificación de satélites: Planeta ${response.name}`
       }
+      this.showSatellitesPlanetDetail = true
+      this.planets = response
     })
+  }
+
+  revert() {
+    const title = document.getElementById("title")
+    if (title != undefined) {
+      title.innerText = 'Modificación de planetas'
+    }
+    this.getAllPlanets()
   }
 
   backToHome() {
     this.router.navigateByUrl('/');
   }
+
+
 }
