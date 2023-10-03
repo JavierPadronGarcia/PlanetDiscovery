@@ -21,6 +21,6 @@ export class SatelliteService {
   }
 
   getAllByPlanet(id: number) {
-    return this.httpClient.get(`${endPoint}/${id}`);
+    return this.httpClient.get(`${endPoint}/planet_id/${id}`);
   }
 }

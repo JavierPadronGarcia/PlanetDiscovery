@@ -14,11 +14,12 @@ interface Planet {
   styleUrls: ['./planet-list.page.scss'],
 })
 export class PlanetListPage implements OnInit {
+
+  satelliteVisibility: any = {};
+
   ionicForm: FormGroup;
-  planetName!: string;
-  planetComposition!: string
   planets: any = [];
-  satellites: any = [];
+  satellites: any = {};
   idToUpdate: number = 0;
 
   iconName: string = 'chevron-down';
@@ -28,19 +29,22 @@ export class PlanetListPage implements OnInit {
 
   showAddButton: boolean = true;
   showUpdateButtons: boolean = false;
+  showUpdateSatellite: boolean = false;
+  showAddSatellite: boolean = false;
+  showSatellites: boolean = false;
 
-
-
-  constructor(private planetService: PlanetService, private satelliteService: SatelliteService, public formBuilder: FormBuilder) { }
+  constructor(private planetService: PlanetService,
+    private satelliteService: SatelliteService,
+    public formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getAllPlanets();
-
     this.ionicForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       composition: ['', [Validators.required, Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
       ],
     });
+
   }
 
   get errorControl() {
@@ -48,50 +52,53 @@ export class PlanetListPage implements OnInit {
   }
 
   changeIcon(id: number) {
-    const icon: any = document.getElementById(`${id}`)
+    const icon: any = document.getElementById(`icon${id}`)
     icon.name = icon.name == this.iconDown ? this.iconUp : this.iconDown
+
+    this.satelliteVisibility[id] = this.satelliteVisibility[id] == false ? true : false
   }
 
-
   getSatellitesByPlanet(id: number) {
-    this.satelliteService.getAllByPlanet(id).subscribe(response =>{
-      this.satellites = response;
-    });
+    return this.satelliteService.getAllByPlanet(id)
   }
 
   getAllPlanets() {
     this.planetService.getAll().subscribe(response => {
       this.planets = response;
-      console.log(this.planets)
+      this.planets.sort((a: any, b: any) => a.id - b.id);
+      this.planets.map((planet: any) => {
+        this.getSatellitesByPlanet(planet.id).subscribe(response => {
+          this.satellites[planet.id] = response
+        })
+        this.satelliteVisibility[planet.id] = false
+      });
     })
+    return undefined
   }
 
   insertPlanet() {
+    let planetName = this.ionicForm.get("name");
+    let planetComposition = this.ionicForm.get("composition")
+
     let planet: Planet = {
-      name: this.planetName,
-      composition: this.planetComposition
+      name: planetName?.value,
+      composition: planetComposition?.value
     }
     this.planetService.add(planet).subscribe(response => {
       this.getAllPlanets();
-      this.planetName = "";
-      this.planetComposition = "";
+      this.clearForm();
     });
   }
 
-  putInfoInForm(planet: any) {
-    this.idToUpdate = planet.id;
-    this.showAddButton = false;
-    this.showUpdateButtons = true;
-
-    this.planetName = planet.name;
-    this.planetComposition = planet.composition;
-  }
-
   updatePlanet() {
+    let planetName = this.ionicForm.get("name");
+    let planetComposition = this.ionicForm.get("composition")
+
     const planet: Planet = {
-      name: this.planetName,
-      composition: this.planetComposition
+      name: planetName?.value,
+      composition: planetComposition?.value
     }
+
     this.planetService.update(planet, this.idToUpdate).subscribe(response => {
       this.getAllPlanets();
       this.showAddButton = true;
@@ -106,9 +113,21 @@ export class PlanetListPage implements OnInit {
     })
   }
 
+  putInfoInForm(planet: any) {
+    let planetName = this.ionicForm.get("name")
+    let planetComposition = this.ionicForm.get("composition")
+
+    this.idToUpdate = planet.id;
+    planetName?.setValue(planet.name);
+    planetComposition?.setValue(planet.composition);
+
+    this.showAddButton = false;
+    this.showUpdateButtons = true;
+  }
+
   clearForm() {
-    this.planetName = "";
-    this.planetComposition = "";
+    this.ionicForm.get("name")?.setValue("")
+    this.ionicForm.get("composition")?.setValue("")
     this.showAddButton = true;
     this.showUpdateButtons = false;
   }
