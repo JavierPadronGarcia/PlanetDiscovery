@@ -24,6 +24,13 @@ export class SatelliteService {
     return this.httpClient.get(`${endPoint}/planet_id/${id}`);
   }
 
+  add(satellite: any, planetId: number) {
+    let body = new URLSearchParams();
+    body.append("name", satellite.name);
+    body.append("composition", satellite.composition);
+    return this.httpClient.post(`${endPoint}/planet_id/${planetId}`, body, httpOptions);
+  }
+
   delete(id: number) {
     return this.httpClient.delete(`${endPoint}/${id}`);
   }

@@ -46,9 +46,10 @@
     </ion-row>
   </form>
 
-  <ion-list *ngIf="planets.length >1">
+  <ion-list *ngIf="planets.length >=1">
     <ion-item *ngFor="let p of planets">
-      <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)"></ion-icon>
+      <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)"
+        *ngIf="satellites.length != 0"></ion-icon>
       <label>
         <div>
           <h2>{{p.name}}</h2>

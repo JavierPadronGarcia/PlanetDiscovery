@@ -5,12 +5,44 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">modifySatellites</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
+  <form [formGroup]="satelliteForm" (ngSubmit)="addSatellite()" novalidate>
+    <ion-item lines="full">
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="name" type="text" aria-label="Name" id="name"></ion-input>
+    </ion-item>
+    <div *ngIf="this.satelliteForm.controls?.['name'].touched && this.satelliteForm.controls?.['name'].invalid">
+      <div class="ion-padding" *ngIf="this.ionicForm.controls?.name.errors?.required">
+        <ion-text color="danger">Nombre requerido.</ion-text>
+      </div>
+      <div class="ion-padding" color="danger" *ngIf="this.ionicForm.controls?.name.errors?.minlength">
+        <ion-text color="danger">El nombre debe ser minimo de dos letras</ion-text>
+      </div>
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Composición</ion-label>
+      <ion-input formControlName="composition" type="text" aria-label="Composition" id="composition"></ion-input>
+    </ion-item>
+    <div
+      *ngIf="this.satelliteForm.controls?.['composition'].touched && this.satelliteForm.controls?.['composition'].invalid">
+      <div class="error ion-padding" *ngIf="errorControl.controls?.composition.errors?.required">
+        <ion-text color="danger">composición de elementos requerida</ion-text>
+      </div>
+      <div class="ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.pattern">
+        <ion-text color="danger">
+          El nombre no es válido, la primera letra con mayusculas y las palabras separadas porcomas
+        </ion-text>
+      </div>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
+        <ion-button type="submit" *ngIf="showAddButton">Agregar</ion-button>
+        <ion-button (click)="updateSatellite()" *ngIf="showUpdateButtons">Actualizar</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 
 
   <div>
@@ -23,7 +55,7 @@
         <h2>{{ sat.name }}</h2>
         <p>composición: {{ sat.composition }}</p>
         <ion-button block color="primary" (click)="deleteSatellite(sat.id, planet.id)">eliminar</ion-button>
-        <ion-button block color="primary" (click)="updateSatellite(sat)">actualizar</ion-button>
+        <ion-button block color="primary" (click)="putInfoInForm(sat)">actualizar</ion-button>
       </label>
     </ion-item>
 
