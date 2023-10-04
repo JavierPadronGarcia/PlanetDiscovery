@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'planet-list',
     loadChildren: () => import('./planet-list/planet-list.module').then( m => m.PlanetListPageModule)
   },
+  {
+    path: 'modify-satellites/:planetId',
+    loadChildren: () => import('./modify-satellites/modify-satellites.module').then( m => m.ModifySatellitesPageModule)
+  },
 ];
 
 @NgModule({

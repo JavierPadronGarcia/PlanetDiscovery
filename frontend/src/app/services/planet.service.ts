@@ -41,5 +41,4 @@ export class PlanetService {
   delete(id: number) {
     return this.httpClient.delete(`${endPoint}/${id}`);
   }
-
 }

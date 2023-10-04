@@ -80,8 +80,6 @@ export class PlanetListPage implements OnInit {
             this.satellites[planet.id] = response
             this.satelliteVisibility[planet.id] = (satVisibility == undefined) || (this.satellites[planet.id].length == 0) ? false : true
           })
-
-
         });
     })
   }
@@ -123,12 +121,6 @@ export class PlanetListPage implements OnInit {
     })
   }
 
-  deleteSatellite(satelliteId: number, planetId: number) {
-    this.satelliteService.delete(satelliteId).subscribe(response => {
-      this.getAllPlanets()
-    })
-  }
-
   putInfoInForm(planet: any) {
     let planetName = this.ionicForm.get("name")
     let planetComposition = this.ionicForm.get("composition")
@@ -148,28 +140,12 @@ export class PlanetListPage implements OnInit {
     this.showUpdateButtons = false;
   }
 
-  changeFormAddSatellite(planetId: number) {
-    this.planetService.getOne(planetId).subscribe((response: any) => {
-      const title = document.getElementById("title")
-      if (title != undefined) {
-        title.innerText = `Modificación de satélites: Planeta ${response.name}`
-      }
-      this.showSatellitesPlanetDetail = true
-      this.planets = response
-    })
-  }
-
-  revert() {
-    const title = document.getElementById("title")
-    if (title != undefined) {
-      title.innerText = 'Modificación de planetas'
-    }
-    this.getAllPlanets()
-  }
-
   backToHome() {
     this.router.navigateByUrl('/');
   }
 
+  goToModifySatellites(planetId: string) {
+    this.router.navigateByUrl(`modify-satellites/${planetId}`);
+  }
 
 }

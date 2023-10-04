@@ -54,7 +54,7 @@
           <h2>{{p.name}}</h2>
           <p>composición: {{p.composition}}</p>
           <div>
-            <ion-button (click)="changeFormAddSatellite(p.id)" shape="round">
+            <ion-button (click)="goToModifySatellites(p.id)" shape="round">
               Modificar Lunas
             </ion-button>
           </div>
@@ -74,21 +74,5 @@
       </label>
     </ion-item>
   </ion-list>
-
-  <div *ngIf="showSatellitesPlanetDetail">
-    <ion-button (click)="revert()" expand="block" fill="clear" shape="round">
-      volver
-    </ion-button>
-    <h3>Lunas del planeta {{planets.name}}</h3>
-    <ion-item *ngFor="let sat of satellites[planets.id]">
-      <label *ngIf="sat.length != 0">
-        <h2>{{ sat.name }}</h2>
-        <p>composición: {{ sat.composition }}</p>
-        <ion-button block color="primary" (click)="deleteSatellite(sat.id, planets.id)">eliminar</ion-button>
-        <ion-button block color="primary" (click)="updateSatellite(sat)">actualizar</ion-button>
-      </label>
-    </ion-item>
-
-  </div>
 
 </ion-content>
