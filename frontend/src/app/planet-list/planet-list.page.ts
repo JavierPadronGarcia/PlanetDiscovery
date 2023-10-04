@@ -19,6 +19,7 @@ export class PlanetListPage implements OnInit {
 
   @ViewChild(IonTitle, { static: true }) ionTitle: IonTitle;
   satelliteVisibility: any = {};
+  iconVisibility: any = {};
   ionicForm: FormGroup;
   title: any;
   planets: any = [];
@@ -76,8 +77,11 @@ export class PlanetListPage implements OnInit {
       this.planets.sort((a: any, b: any) => a.id - b.id)
         .map((planet: any) => {
           this.getSatellitesByPlanet(planet.id).subscribe(response => {
-            let satVisibility = this.satelliteVisibility[planet.id]
             this.satellites[planet.id] = response
+
+            let satVisibility = this.satelliteVisibility[planet.id]
+
+            this.iconVisibility[planet.id] = (this.satellites[planet.id].length == 0) ? false : true
             this.satelliteVisibility[planet.id] = (satVisibility == undefined) || (this.satellites[planet.id].length == 0) ? false : true
           })
         });

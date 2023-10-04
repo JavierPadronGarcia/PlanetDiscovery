@@ -39,8 +39,6 @@ export class ModifySatellitesPage implements OnInit {
       composition: ['', [Validators.required, Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
       ],
     });
-
-    console.log(this.satelliteForm.controls?.['name'].errors?.['required'])
   }
 
   getPlanet() {

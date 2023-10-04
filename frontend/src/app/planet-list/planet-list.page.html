@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title size="large" id="title">Modificación de planetas</ion-title>
-    <ion-button (click)="backToHome()">Ir a la lista</ion-button>
+    <ion-button (click)="backToHome()">Dejar de modificar</ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -49,7 +49,7 @@
   <ion-list *ngIf="planets.length >=1">
     <ion-item *ngFor="let p of planets">
       <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)"
-        *ngIf="satellites.length != 0"></ion-icon>
+        *ngIf="iconVisibility[p.id]"></ion-icon>
       <label>
         <div>
           <h2>{{p.name}}</h2>
