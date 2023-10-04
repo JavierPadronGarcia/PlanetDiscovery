@@ -39,6 +39,8 @@ export class ModifySatellitesPage implements OnInit {
       composition: ['', [Validators.required, Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
       ],
     });
+
+    console.log(this.satelliteForm.controls?.['name'].errors?.['required'])
   }
 
   getPlanet() {
@@ -63,7 +65,6 @@ export class ModifySatellitesPage implements OnInit {
       composition: satComposition?.value
     }
     this.satelliteService.add(satellite, this.planetId).subscribe(response => {
-      this.getSatellites(this.planetId)
       window.location.reload();
     })
   }
@@ -74,7 +75,22 @@ export class ModifySatellitesPage implements OnInit {
     })
   }
 
-  updateSatellite(satellite: any) {
+  updateSatellite() {
+
+    let satName = this.satelliteForm.get("name");
+    let satComposition = this.satelliteForm.get("composition")
+
+    const satellite: any = {
+      name: satName?.value,
+      composition: satComposition?.value,
+      idSat: this.idToUpdate
+    }
+
+    this.satelliteService.update(satellite, this.planetId).subscribe(response => {
+      this.showAddButton = true;
+      this.showUpdateButtons = false;
+      window.location.reload();
+    })
 
     this.showAddButton = true;
     this.showUpdateButtons = false;
@@ -101,6 +117,7 @@ export class ModifySatellitesPage implements OnInit {
     this.showAddButton = true;
     this.showUpdateButtons = false;
   }
+  
   goBack() {
     this.router.navigateByUrl('/planet-list')
   }

@@ -26,12 +26,12 @@
       <ion-input formControlName="composition" type="text" aria-label="Composition" id="composition"></ion-input>
     </ion-item>
     <div *ngIf="this.ionicForm.controls?.['composition'].touched && this.ionicForm.controls?.['composition'].invalid">
-      <div class="error ion-padding" *ngIf="errorControl.controls?.composition.errors?.required">
+      <div class="error ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.required">
         <ion-text color="danger">composición de elementos requerida</ion-text>
       </div>
       <div class="ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.pattern">
         <ion-text color="danger">
-          El nombre no es válido, la primera letra con mayusculas y las palabras separadas porcomas
+          El nombre no es válido, la primera letra con mayusculas y las palabras separadas por comas
         </ion-text>
       </div>
     </div>

@@ -31,6 +31,14 @@ export class SatelliteService {
     return this.httpClient.post(`${endPoint}/planet_id/${planetId}`, body, httpOptions);
   }
 
+  update(satellite: any, planetId: number) {
+    let body = new URLSearchParams();
+    body.append("name", satellite.name);
+    body.append("composition", satellite.composition);
+    body.append("idSat",satellite.idSat);
+    return this.httpClient.put(`${endPoint}/planet_id/${planetId}`, body, httpOptions)
+  }
+
   delete(id: number) {
     return this.httpClient.delete(`${endPoint}/${id}`);
   }
