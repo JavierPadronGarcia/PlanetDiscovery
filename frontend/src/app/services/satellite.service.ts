@@ -35,7 +35,7 @@ export class SatelliteService {
     let body = new URLSearchParams();
     body.append("name", satellite.name);
     body.append("composition", satellite.composition);
-    body.append("idSat",satellite.idSat);
+    body.append("idSat", satellite.satId);
     return this.httpClient.put(`${endPoint}/planet_id/${planetId}`, body, httpOptions)
   }
 

@@ -56,11 +56,14 @@
         <p>composición: {{ sat.composition }}</p>
         <ion-button block color="primary" (click)="deleteSatellite(sat.id, planet.id)">eliminar</ion-button>
         <ion-button block color="primary" (click)="putInfoInForm(sat)">actualizar</ion-button>
+        <ion-button (click)="goToChangePanet(sat)"  shape="round">
+          Cambiar planeta
+        </ion-button>
       </label>
     </ion-item>
 
     <div *ngIf="showMessageNoSat">
-      no hay lunas para esta planeta
+      no hay lunas para este planeta
     </div>
   </div>
 

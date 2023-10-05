@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { SatelliteService } from '../services/satellite.service';
 import { PlanetService } from '../services/planet.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -115,9 +115,13 @@ export class ModifySatellitesPage implements OnInit {
     this.showAddButton = true;
     this.showUpdateButtons = false;
   }
-  
+
   goBack() {
     this.router.navigateByUrl('/planet-list')
+  }
+
+  goToChangePanet(satellite: any) {
+    this.router.navigateByUrl(`/change-planet/${satellite.id}/${satellite.name}/${satellite.composition}/${satellite.planet.id}`)
   }
 
 }

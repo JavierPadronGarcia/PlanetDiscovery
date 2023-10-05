@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cambiar planeta del satélite: {{satellite.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-button (click)="backToModifySatellites()">
+    Cancelar
+  </ion-button>
+
+  <ion-list *ngIf="planets.length != 0">
+    <ion-item *ngFor="let p of planets">
+      <ion-label>
+        <h2>{{p.name}}</h2>
+        <p>{{p.composition}}</p>
+      </ion-label>
+      <ion-button (click)="updateParentPlanet(p.id)">
+        Cambiar a este planeta
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <h3 *ngIf="planets.length == 0">
+    No hay planetas, prueba agregar planetas para cambiar de planeta al satélite {{satellite.name}}
+  </h3>
+</ion-content>
