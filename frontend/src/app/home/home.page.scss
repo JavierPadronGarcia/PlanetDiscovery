@@ -1,27 +1,31 @@
 #container {
   text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+  top: 3%;
 }
 
 #container p {
   font-size: 16px;
   line-height: 22px;
-
   color: #8c8c8c;
-
   margin: 0;
 }
 
-#container a {
-  text-decoration: none;
+#main-label {
+  width: 100%;
+}
+
+#planet-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10%;
+}
+
+#planet-container>div:first-child {
+  width: 10%;
+}
+
+.icon {
+  width: 100%;
+  font-size: 2rem;
 }

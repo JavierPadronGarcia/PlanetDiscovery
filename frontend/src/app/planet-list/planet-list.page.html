@@ -5,7 +5,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" id="container">
 
   <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
     <ion-item lines="full">
@@ -48,21 +48,28 @@
 
   <ion-list *ngIf="planets.length >=1">
     <ion-item *ngFor="let p of planets">
-      <ion-icon name="{{iconName}}" id="icon{{p.id}}" (click)="changeIcon(p.id)"
-        *ngIf="iconVisibility[p.id]"></ion-icon>
-      <label>
-        <div>
-          <h2>{{p.name}}</h2>
-          <p>composición: {{p.composition}}</p>
-          <div>
-            <ion-button (click)="goToModifySatellites(p.id)" shape="round">
-              Modificar Lunas
-            </ion-button>
-          </div>
+      <label id="main-label">
+        <div id="planet-container">
+          <aside>
+            <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
+              *ngIf="iconVisibility[p.id]"></ion-icon>
+          </aside>
+          <section>
+            <h2>{{p.name}}</h2>
+            <p>composición: {{p.composition}}</p>
+            <section id="button-section">
+              <div>
+                <ion-button (click)="goToModifySatellites(p.id)" shape="round">
+                  Modificar Lunas
+                </ion-button>
+              </div>
+              <div>
+                <ion-button block color="danger" (click)="deletePlanet(p.id)">eliminar</ion-button>
+                <ion-button block color="primary" (click)="putInfoInForm(p)">actualizar</ion-button>
+              </div>
+            </section>
+          </section>
         </div>
-
-        <ion-button block color="primary" (click)="deletePlanet(p.id)">eliminar</ion-button>
-        <ion-button block color="primary" (click)="putInfoInForm(p)">actualizar</ion-button>
 
         <div *ngIf="satelliteVisibility[p.id]">
           <ion-item *ngFor="let sat of satellites[p.id]">

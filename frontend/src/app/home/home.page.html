@@ -1,22 +1,50 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Lista de planetas y lunas
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" id="container">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Lista de planetas y lunas</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <ion-button (click)="goToPlanetList()" shape="round">
-      modificar planetas y lunas
-    </ion-button>
+  <ion-button (click)="goToPlanetList()" shape="round">
+    modificar planetas y lunas
+  </ion-button>
 
-  </div>
+  <ion-list *ngIf="planets.length >=1">
+
+    <ion-item *ngFor="let p of planets">
+      <label id="main-label">
+        <div id="planet-container">
+          <div>
+            <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
+              *ngIf="iconVisibility[p.id]"></ion-icon>
+          </div>
+          <div>
+            <h2>{{p.name}}</h2>
+            <p>composición: {{p.composition}}</p>
+          </div>
+        </div>
+
+        <div *ngIf="satelliteVisibility[p.id]">
+          <ion-item *ngFor="let sat of satellites[p.id]">
+            <label *ngIf="sat.length != 0">
+              <h3>{{ sat.name }}</h3>
+              <p>composición: {{ sat.composition }}</p>
+            </label>
+          </ion-item>
+        </div>
+
+      </label>
+    </ion-item>
+    <div *ngIf="planets.length == 0">
+      No hay planetas
+    </div>
+  </ion-list>
 </ion-content>

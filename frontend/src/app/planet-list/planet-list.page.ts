@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonTitle } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PlanetService } from '../services/planet.service';
 import { SatelliteService } from '../services/satellite.service';
@@ -17,11 +16,9 @@ interface Planet {
 })
 export class PlanetListPage implements OnInit {
 
-  @ViewChild(IonTitle, { static: true }) ionTitle: IonTitle;
   satelliteVisibility: any = {};
   iconVisibility: any = {};
   ionicForm: FormGroup;
-  title: any;
   planets: any = [];
   satellites: any = {};
   idToUpdate: number = 0;
@@ -38,7 +35,6 @@ export class PlanetListPage implements OnInit {
   showAddSatellite: boolean = false;
   showSatellites: boolean = false;
   showAddSatButton: boolean = false;
-  showSatellitesPlanetDetail: boolean = false;
 
   constructor(private planetService: PlanetService,
     private satelliteService: SatelliteService,
@@ -47,7 +43,6 @@ export class PlanetListPage implements OnInit {
 
   ngOnInit() {
     this.getAllPlanets();
-    this.title = document.querySelector("ion-title")?.innerText;
     this.ionicForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       composition: ['', [Validators.required, Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
@@ -71,7 +66,6 @@ export class PlanetListPage implements OnInit {
   }
 
   getAllPlanets() {
-    this.showSatellitesPlanetDetail = false
     this.planetService.getAll().subscribe(response => {
       this.planets = response;
       this.planets.sort((a: any, b: any) => a.id - b.id)
