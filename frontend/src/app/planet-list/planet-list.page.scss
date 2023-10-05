@@ -4,11 +4,43 @@
     min-height: fit-content;
 }
 
+a {
+    text-decoration: none;
+}
+
 #container p {
     font-size: 16px;
     line-height: 22px;
     color: #8c8c8c;
     margin: 0;
+}
+
+#container>div:first-child {
+    display: flex;
+    justify-content: center;
+    padding: 3% 0;
+}
+
+#anchor-back-home {
+    border-radius: 64px;
+    padding: 10px;
+    background-color: #3880ff;
+    color: #fff;
+    text-wrap: nowrap;
+}
+
+#anchor-back-home:hover {
+    background: rgb(36, 91, 186);
+}
+
+#anchor-back-home:focus {
+    background-color: #fff;
+    opacity: .24;
+}
+
+#anchor-back-home:active {
+    background: transparent;
+    opacity: 0;
 }
 
 .main-item>label {
@@ -45,5 +77,5 @@
 
 .main-item:last-child>label {
     margin-bottom: 10%;
-    border-bottom: 0px
+    border-bottom: 0px;
 }

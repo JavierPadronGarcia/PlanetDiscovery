@@ -1,0 +1,24 @@
+#header-toolbar>div {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+#header-toolbar>div>ion-title {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+#header-toolbar>div>div{
+    background-color: #2059bb;
+    padding-right: 2%;
+    display: flex;
+    text-align: center;
+    border-radius: 50%;
+}
+
+#header-toolbar>div>div>ion-icon {
+    font-size: 3rem;
+}

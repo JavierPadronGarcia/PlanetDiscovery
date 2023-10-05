@@ -1,6 +1,11 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>modifySatellites</ion-title>
+  <ion-toolbar id="header-toolbar">
+    <div>
+      <ion-title>Modificación de satélites</ion-title>
+      <div (click)="goBack()">
+        <ion-icon slot="icon-only" name="caret-back-outline"></ion-icon>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -46,9 +51,6 @@
 
 
   <div>
-    <ion-button (click)="goBack()" expand="block" fill="clear" shape="round">
-      volver
-    </ion-button>
     <h3>Lunas del planeta {{planet.name}}</h3>
     <ion-item *ngFor="let sat of satellites">
       <label *ngIf="sat.length != 0">
@@ -56,7 +58,7 @@
         <p>composición: {{ sat.composition }}</p>
         <ion-button block color="primary" (click)="deleteSatellite(sat.id, planet.id)">eliminar</ion-button>
         <ion-button block color="primary" (click)="putInfoInForm(sat)">actualizar</ion-button>
-        <ion-button (click)="goToChangePanet(sat)"  shape="round">
+        <ion-button (click)="goToChangePanet(sat)" shape="round">
           Cambiar planeta
         </ion-button>
       </label>

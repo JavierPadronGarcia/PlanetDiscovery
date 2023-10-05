@@ -1,11 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title size="large" id="title">Modificación de planetas</ion-title>
-    <ion-button (click)="backToHome()">Dejar de modificar</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" id="container">
+
+  <div>
+    <a href="/" id="anchor-back-home">Dejar de modificar</a>
+  </div>
 
   <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
     <ion-item lines="full">
