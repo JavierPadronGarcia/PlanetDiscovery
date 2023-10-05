@@ -3,11 +3,45 @@
   top: 3%;
 }
 
+a {
+  text-decoration: none;
+}
+
+#anchor-modify-planets {
+  border-radius: 64px;
+  padding-top: 10px;
+  padding-left: 26px;
+  padding-right: 26px;
+  padding-bottom: 10px;
+  background: var(--ion-color-primary, #3880ff);
+  color: var(--ion-color-primary-contrast, #fff);
+  text-wrap: nowrap;
+}
+
+#anchor-modify-planets:hover {
+  background: rgb(36, 91, 186);
+}
+
+#anchor-modify-planets:focus {
+  background: var(--ion-color-primary-contrast, #fff);
+  opacity: .24;
+}
+
+#anchor-modify-planets:active {
+  background: transparent;
+  opacity: 0;
+}
+
 #container p {
   font-size: 16px;
   line-height: 22px;
   color: #8c8c8c;
   margin: 0;
+}
+
+#list {
+  margin-top: 5%;
+  border: 1px solid red;
 }
 
 #main-label {

@@ -27,7 +27,9 @@ export class HomePage {
   }
 
   goToPlanetList() {
-    this.router.navigateByUrl('/planet-list');
+    this.router.navigateByUrl('/planet-list').then(() => {
+      window.location.reload()
+    });
   }
 
   getSatellitesByPlanet(id: number) {

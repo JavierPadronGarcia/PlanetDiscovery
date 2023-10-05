@@ -20,7 +20,7 @@ export class PlanetService {
     return this.httpClient.get(endPoint);
   }
 
-  getOne(id: number){
+  getOne(id: number) {
     return this.httpClient.get(`${endPoint}/${id}`);
   }
 

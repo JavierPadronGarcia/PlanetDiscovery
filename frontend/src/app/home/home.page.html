@@ -12,19 +12,17 @@
       <ion-title size="large">Lista de planetas y lunas</ion-title>
     </ion-toolbar>
   </ion-header>
+  <div>
+    <a href="http://localhost:8100/planet-list" id="anchor-modify-planets">modificar planetas y lunas</a>
+  </div>
 
-  <ion-button (click)="goToPlanetList()" shape="round">
-    modificar planetas y lunas
-  </ion-button>
-
-  <ion-list *ngIf="planets.length >=1">
-
+  <ion-list *ngIf="planets.length >=1" id="list">
     <ion-item *ngFor="let p of planets">
       <label id="main-label">
         <div id="planet-container">
           <div>
             <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
-              *ngIf="iconVisibility[p.id]"></ion-icon>
+              *ngIf="iconVisibility[p.id] "></ion-icon>
           </div>
           <div>
             <h2>{{p.name}}</h2>

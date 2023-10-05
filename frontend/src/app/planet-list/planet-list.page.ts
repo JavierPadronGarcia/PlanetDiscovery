@@ -139,7 +139,9 @@ export class PlanetListPage implements OnInit {
   }
 
   backToHome() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/').then(() => {
+      window.location.reload()
+    });;
   }
 
   goToModifySatellites(planetId: string) {

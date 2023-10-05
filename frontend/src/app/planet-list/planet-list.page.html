@@ -38,18 +38,16 @@
     <ion-row>
       <ion-col>
         <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
-        <ion-button type="submit" *ngIf="showAddButton">Confirmar</ion-button>
-        <ion-button (click)="addSatellite()" *ngIf="showAddSatButton">Confirmar</ion-button>
-        <ion-button (click)="updateSatellite()" *ngIf="showUpdateSatellite">Actualizar</ion-button>
+        <ion-button type="submit" *ngIf="showAddButton" [disabled]="!this.ionicForm.valid">Confirmar</ion-button>
         <ion-button (click)="updatePlanet()" *ngIf="showUpdateButtons">Actualizar</ion-button>
       </ion-col>
     </ion-row>
   </form>
 
   <ion-list *ngIf="planets.length >=1">
-    <ion-item *ngFor="let p of planets">
-      <label id="main-label">
-        <div id="planet-container">
+    <ion-item *ngFor="let p of planets; let i index" class="main-item">
+      <label class="main-label">
+        <div class="planet-container">
           <aside>
             <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
               *ngIf="iconVisibility[p.id]"></ion-icon>
@@ -57,7 +55,7 @@
           <section>
             <h2>{{p.name}}</h2>
             <p>composición: {{p.composition}}</p>
-            <section id="button-section">
+            <section class="button-section">
               <div>
                 <ion-button (click)="goToModifySatellites(p.id)" shape="round">
                   Modificar Lunas
@@ -71,7 +69,7 @@
           </section>
         </div>
 
-        <div *ngIf="satelliteVisibility[p.id]">
+        <div *ngIf="satelliteVisibility[p.id]" id="satellites-container">
           <ion-item *ngFor="let sat of satellites[p.id]">
             <label *ngIf="sat.length != 0">
               <h2>{{ sat.name }}</h2>

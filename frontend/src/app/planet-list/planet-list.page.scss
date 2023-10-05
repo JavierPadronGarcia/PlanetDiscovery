@@ -1,6 +1,7 @@
 #container {
     text-align: center;
-    top: 3%;
+    top: 0%;
+    min-height: fit-content;
 }
 
 #container p {
@@ -10,18 +11,18 @@
     margin: 0;
 }
 
-#main-label {
+.main-item>label {
     width: 100%;
 }
 
-#planet-container {
+.planet-container {
     display: flex;
     align-items: center;
     width: 100%;
     gap: 10%;
 }
 
-#planet-container>aside {
+.planet-container>aside {
     width: 10%;
 }
 
@@ -30,9 +31,19 @@
     font-size: 2rem;
 }
 
-#button-section{
+.button-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid red;
+}
+
+.main-item>label {
+    margin-top: 1%;
+    padding-bottom: 3%;
+    border-bottom: 1px solid rgb(47, 47, 47);
+}
+
+.main-item:last-child>label {
+    margin-bottom: 10%;
+    border-bottom: 0px
 }
