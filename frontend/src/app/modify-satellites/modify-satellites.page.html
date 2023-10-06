@@ -11,7 +11,7 @@
 
 <ion-content [fullscreen]="true" id="container">
 
-  <form [formGroup]="satelliteForm" (ngSubmit)="addSatellite()" novalidate>
+  <form [formGroup]="satelliteForm" (ngSubmit)="addSatellite()" novalidate #scrollTopContainer>
     <ion-item lines="full">
       <ion-label position="floating">Nombre</ion-label>
       <ion-input formControlName="name" type="text" aria-label="Name" id="name"></ion-input>

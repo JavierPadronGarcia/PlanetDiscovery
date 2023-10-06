@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SatelliteService } from '../services/satellite.service';
 import { PlanetService } from '../services/planet.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -11,6 +11,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./modify-satellites.page.scss'],
 })
 export class ModifySatellitesPage implements OnInit {
+
+  @ViewChild('scrollTopContainer') scrollTopContainer: ElementRef;
 
   planetId: any
   planet: any = {}
@@ -104,6 +106,13 @@ export class ModifySatellitesPage implements OnInit {
 
     this.showAddButton = false;
     this.showUpdateButtons = true;
+
+    if (this.scrollTopContainer && this.scrollTopContainer.nativeElement) {
+      this.scrollTopContainer.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        top: this.scrollTopContainer.nativeElement.getBoundingClientRect().top
+      });
+    }
   }
 
   clearForm() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PlanetService } from '../services/planet.service';
 import { SatelliteService } from '../services/satellite.service';
@@ -9,12 +9,15 @@ interface Planet {
   composition: string;
 }
 
+
 @Component({
   selector: 'app-planet-list',
   templateUrl: './planet-list.page.html',
   styleUrls: ['./planet-list.page.scss'],
 })
 export class PlanetListPage implements OnInit {
+
+  @ViewChild('scrollTopContainer') scrollTopContainer: ElementRef;
 
   satelliteVisibility: any = {};
   iconVisibility: any = {};
@@ -129,6 +132,13 @@ export class PlanetListPage implements OnInit {
 
     this.showAddButton = false;
     this.showUpdateButtons = true;
+    if (this.scrollTopContainer && this.scrollTopContainer.nativeElement) {
+      this.scrollTopContainer.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        top: this.scrollTopContainer.nativeElement.getBoundingClientRect().top
+      });
+    }
+
   }
 
   clearForm() {

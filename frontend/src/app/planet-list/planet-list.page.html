@@ -5,6 +5,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="container">
+
+  <div #scrollTopContainer></div>
   <div>
     <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
       <ion-item lines="full">
