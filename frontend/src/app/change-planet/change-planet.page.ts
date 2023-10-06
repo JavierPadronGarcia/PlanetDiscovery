@@ -55,5 +55,4 @@ export class ChangePlanetPage implements OnInit {
   backToModifySatellites() {
     this.router.navigateByUrl(`/modify-satellites/${this.planetToAvoid}`)
   }
-
 }

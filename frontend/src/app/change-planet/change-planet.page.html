@@ -1,13 +1,15 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Cambiar planeta del satélite: {{satellite.name}}</ion-title>
+  <ion-toolbar id="header-toolbar">
+    <div>
+      <ion-title>Cambiar planeta del satélite: {{satellite.name}}</ion-title>
+      <div (click)="backToModifySatellites()">
+        <ion-icon slot="icon-only" name="caret-back-outline"></ion-icon>
+      </div>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button (click)="backToModifySatellites()">
-    Cancelar
-  </ion-button>
 
   <ion-list *ngIf="planets.length != 0">
     <ion-item *ngFor="let p of planets">

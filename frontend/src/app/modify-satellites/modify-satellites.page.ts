@@ -116,12 +116,7 @@ export class ModifySatellitesPage implements OnInit {
     this.showUpdateButtons = false;
   }
 
-  goBack() {
-    this.router.navigateByUrl('/planet-list')
-  }
-
   goToChangePanet(satellite: any) {
     this.router.navigateByUrl(`/change-planet/${satellite.id}/${satellite.name}/${satellite.composition}/${satellite.planet.id}`)
   }
-
 }
