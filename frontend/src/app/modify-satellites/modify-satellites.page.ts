@@ -38,7 +38,7 @@ export class ModifySatellitesPage implements OnInit {
     this.getPlanet()
     this.satelliteForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      composition: ['', [Validators.required, Validators.maxLength(200), Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
+      composition: ['', [Validators.required, Validators.maxLength(200), Validators.pattern('[A-Zá-ú][a-zá-ú]+(?:,[ ]?[A-Zá-ú][a-zá-ú]+)*')],
       ],
     });
   }
