@@ -9,20 +9,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-
-  <ion-list *ngIf="planets.length != 0">
-    <ion-item *ngFor="let p of planets">
-      <ion-label>
-        <h2>{{p.name}}</h2>
-        <p>{{p.composition}}</p>
-      </ion-label>
-      <ion-button (click)="updateParentPlanet(p.id)">
-        Cambiar a este planeta
-      </ion-button>
-    </ion-item>
-  </ion-list>
-  <h3 *ngIf="planets.length == 0">
-    No hay planetas, prueba agregar planetas para cambiar de planeta al satélite {{satellite.name}}
-  </h3>
+<ion-content [fullscreen]="true" id="container">
+  <div>
+    <ion-list *ngIf="planets.length != 0" class="list">
+      <ion-item *ngFor="let p of planets" class="main-item">
+        <ion-label>
+          <h2>{{p.name}}</h2>
+          <p>{{p.composition}}</p>
+        </ion-label>
+        <ion-button shape="round" (click)="updateParentPlanet(p.id)">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    <h3 *ngIf="planets.length == 0">
+      No hay planetas, prueba agregar planetas para cambiar de planeta al satélite {{satellite.name}}
+    </h3>
+  </div>
 </ion-content>

@@ -7,37 +7,41 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="container">
-  <div>
-    <a href="http://localhost:8100/planet-list" id="anchor-modify-planets">modificar planetas y lunas</a>
-  </div>
-
-  <ion-list *ngIf="planets.length >=1" id="list">
-    <ion-item *ngFor="let p of planets">
-      <label id="main-label">
-        <div id="planet-container">
-          <div>
-            <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
-              *ngIf="iconVisibility[p.id] "></ion-icon>
+  <section>
+    <ion-list *ngIf="planets.length >=1" class="list">
+      <ion-item *ngFor="let p of planets">
+        <label class="main-label">
+          <div id="planet-container">
+            <div>
+              <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
+                *ngIf="iconVisibility[p.id] "></ion-icon>
+            </div>
+            <div>
+              <h2>{{p.name}}</h2>
+              <p>composición: {{p.composition}}</p>
+            </div>
           </div>
-          <div>
-            <h2>{{p.name}}</h2>
-            <p>composición: {{p.composition}}</p>
+
+          <div *ngIf="satelliteVisibility[p.id]" class="satellites-container">
+            <ion-item *ngFor="let sat of satellites[p.id]">
+              <label *ngIf="sat.length != 0">
+                <h3>{{ sat.name }}</h3>
+                <p>composición: {{ sat.composition }}</p>
+              </label>
+            </ion-item>
           </div>
-        </div>
 
-        <div *ngIf="satelliteVisibility[p.id]">
-          <ion-item *ngFor="let sat of satellites[p.id]">
-            <label *ngIf="sat.length != 0">
-              <h3>{{ sat.name }}</h3>
-              <p>composición: {{ sat.composition }}</p>
-            </label>
-          </ion-item>
-        </div>
+        </label>
+      </ion-item>
+      <div *ngIf="planets.length == 0">
+        No hay planetas
+      </div>
+    </ion-list>
+  </section>
 
-      </label>
-    </ion-item>
-    <div *ngIf="planets.length == 0">
-      No hay planetas
+  <footer id="change-page">
+    <div>
+      <a href="http://localhost:8100/planet-list" id="anchor-modify-planets">Modificar lista</a>
     </div>
-  </ion-list>
+  </footer>
 </ion-content>

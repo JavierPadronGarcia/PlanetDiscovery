@@ -5,89 +5,92 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" id="container">
-
   <div>
-    <a href="/" id="anchor-back-home">Dejar de modificar</a>
+    <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
+      <ion-item lines="full">
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="name" type="text" aria-label="Name" id="name"></ion-input>
+      </ion-item>
+      <div *ngIf="this.ionicForm.controls?.['name'].touched && this.ionicForm.controls?.['name'].invalid">
+        <div class="ion-padding" *ngIf="this.ionicForm.controls?.name.errors?.required">
+          <ion-text color="danger">Nombre requerido.</ion-text>
+        </div>
+        <div class="error ion-padding" color="danger" *ngIf="this.ionicForm.controls?.['name'].errors?.['maxlength']">
+          <ion-text color="danger">El nombre no puede tener más de 50 caracteres</ion-text>
+        </div>
+        <div class="ion-padding" color="danger" *ngIf="this.ionicForm.controls?.name.errors?.minlength">
+          <ion-text color="danger">El nombre debe ser minimo de dos letras</ion-text>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">Composición</ion-label>
+        <ion-input formControlName="composition" type="text" aria-label="Composition" id="composition"></ion-input>
+      </ion-item>
+      <div *ngIf="this.ionicForm.controls?.['composition'].touched && this.ionicForm.controls?.['composition'].invalid">
+        <div class="error ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.required">
+          <ion-text color="danger">composición de elementos requerida</ion-text>
+        </div>
+        <div class="error ion-padding" *ngIf="this.ionicForm.controls?.['composition'].errors?.['maxlength']">
+          <ion-text color="danger">la composición no puede tener más de 200 caracteres</ion-text>
+        </div>
+        <div class="ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.pattern">
+          <ion-text color="danger">
+            El nombre no es válido, la primera letra con mayusculas y las palabras separadas por comas
+          </ion-text>
+        </div>
+      </div>
+      <ion-row>
+        <ion-col>
+          <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
+          <ion-button type="submit" *ngIf="showAddButton" [disabled]="!this.ionicForm.valid">Confirmar</ion-button>
+          <ion-button (click)="updatePlanet()" *ngIf="showUpdateButtons">Actualizar</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
   </div>
 
-  <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
-    <ion-item lines="full">
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input formControlName="name" type="text" aria-label="Name" id="name"></ion-input>
-    </ion-item>
-    <div *ngIf="this.ionicForm.controls?.['name'].touched && this.ionicForm.controls?.['name'].invalid">
-      <div class="ion-padding" *ngIf="this.ionicForm.controls?.name.errors?.required">
-        <ion-text color="danger">Nombre requerido.</ion-text>
-      </div>
-      <div class="error ion-padding" color="danger" *ngIf="this.ionicForm.controls?.['name'].errors?.['maxlength']">
-        <ion-text color="danger">El nombre no puede tener más de 50 caracteres</ion-text>
-      </div>
-      <div class="ion-padding" color="danger" *ngIf="this.ionicForm.controls?.name.errors?.minlength">
-        <ion-text color="danger">El nombre debe ser minimo de dos letras</ion-text>
-      </div>
-    </div>
+  <div class="list-container">
+    <ion-list *ngIf="planets.length >=1" class="list">
+      <ion-item *ngFor="let p of planets; let i index" class="main-item">
+        <label class="main-label">
+          <div class="planet-container">
+            <aside>
+              <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
+                *ngIf="iconVisibility[p.id]"></ion-icon>
+            </aside>
+            <section>
+              <div>
+                <h2>{{p.name}}</h2>
+                <p>composición: {{p.composition}}</p>
+              </div>
+              <div>
+                <ion-button (click)="goToModifySatellites(p.id)" shape="round">
+                  Modificar <ion-icon name="moon"></ion-icon>
+                </ion-button>
+              </div>
+            </section>
+            <aside class="edit-icons">
+              <ion-icon name="trash" (click)="deletePlanet(p.id)"></ion-icon>
+              <ion-icon name="create" (click)="putInfoInForm(p)"></ion-icon>
+            </aside>
+          </div>
 
-    <ion-item>
-      <ion-label position="floating">Composición</ion-label>
-      <ion-input formControlName="composition" type="text" aria-label="Composition" id="composition"></ion-input>
-    </ion-item>
-    <div *ngIf="this.ionicForm.controls?.['composition'].touched && this.ionicForm.controls?.['composition'].invalid">
-      <div class="error ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.required">
-        <ion-text color="danger">composición de elementos requerida</ion-text>
-      </div>
-      <div class="error ion-padding" *ngIf="this.ionicForm.controls?.['composition'].errors?.['maxlength']">
-        <ion-text color="danger">la composición no puede tener más de 200 caracteres</ion-text>
-      </div>
-      <div class="ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.pattern">
-        <ion-text color="danger">
-          El nombre no es válido, la primera letra con mayusculas y las palabras separadas por comas
-        </ion-text>
-      </div>
-    </div>
-    <ion-row>
-      <ion-col>
-        <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
-        <ion-button type="submit" *ngIf="showAddButton" [disabled]="!this.ionicForm.valid">Confirmar</ion-button>
-        <ion-button (click)="updatePlanet()" *ngIf="showUpdateButtons">Actualizar</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+          <div *ngIf="satelliteVisibility[p.id]" id="satellites-container">
+            <ion-item *ngFor="let sat of satellites[p.id]">
+              <label *ngIf="sat.length != 0">
+                <h2>{{ sat.name }}</h2>
+                <p>composición: {{ sat.composition }}</p>
+              </label>
+            </ion-item>
+          </div>
+        </label>
+      </ion-item>
+    </ion-list>
+  </div>
 
-  <ion-list *ngIf="planets.length >=1">
-    <ion-item *ngFor="let p of planets; let i index" class="main-item">
-      <label class="main-label">
-        <div class="planet-container">
-          <aside>
-            <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
-              *ngIf="iconVisibility[p.id]"></ion-icon>
-          </aside>
-          <section>
-            <div>
-              <h2>{{p.name}}</h2>
-              <p>composición: {{p.composition}}</p>
-            </div>
-            <div>
-              <ion-button (click)="goToModifySatellites(p.id)" shape="round">
-                Modificar <ion-icon name="moon"></ion-icon>
-              </ion-button>
-            </div>
-          </section>
-          <aside class="edit-icons">
-            <ion-icon name="trash" (click)="deletePlanet(p.id)"></ion-icon>
-            <ion-icon name="create" (click)="putInfoInForm(p)"></ion-icon>
-          </aside>
-        </div>
-
-        <div *ngIf="satelliteVisibility[p.id]" id="satellites-container">
-          <ion-item *ngFor="let sat of satellites[p.id]">
-            <label *ngIf="sat.length != 0">
-              <h2>{{ sat.name }}</h2>
-              <p>composición: {{ sat.composition }}</p>
-            </label>
-          </ion-item>
-        </div>
-      </label>
-    </ion-item>
-  </ion-list>
+  <footer class="back-home-button">
+    <a href="/" id="anchor-back-home">Dejar de modificar</a>
+  </footer>
 
 </ion-content>

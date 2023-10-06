@@ -1,14 +1,22 @@
+ion-list,
+ion-item {
+    --ion-item-background: rgba(30, 30, 30, 0.4);
+}
+
+ion-title {
+    text-align: center;
+}
+
 #header-toolbar>div {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
 }
 
 #header-toolbar>div>a {
     background-color: #2059bb;
     padding-right: 5px;
+    margin-right: 1rem;
     display: flex;
     text-align: center;
     border-radius: 50%;
@@ -27,6 +35,21 @@
     font-size: 3rem;
 }
 
+#container {
+    text-align: center;
+    --background: none;
+    background-image: url('../../assets/images/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &#container p {
+        font-size: 16px;
+        line-height: 22px;
+        color: #8c8c8c;
+        margin: 0;
+    }
+}
+
 .satellite-items {
     padding-right: 0;
 }
@@ -35,10 +58,18 @@
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
+    padding-top: 1rem;
 }
 
 .satellite-items>label>div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     width: 100%;
+}
+
+.satellite-items>label>div:first-child>* {
+    margin: 0;
 }
 
 .edit-buttons {
@@ -73,4 +104,48 @@
     display: flex;
     justify-content: center;
     flex-wrap: nowrap;
+}
+
+@media only screen and (min-width: 768px) {
+
+    #satellite-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .satellite-items {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+
+    #satellite-content {
+        flex-flow: row wrap;
+        justify-content: space-around;
+        width: 100%;
+
+        .satellite-items {
+            width: 45%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+
+    ion-list,
+    ion-item {
+        --ion-item-background: rgba(30, 30, 30, 0.6);
+    }
+
+    #satellite-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #satellite-content {
+        width: 90%;
+    }
 }
