@@ -19,6 +19,9 @@
       <div class="ion-padding" *ngIf="this.ionicForm.controls?.name.errors?.required">
         <ion-text color="danger">Nombre requerido.</ion-text>
       </div>
+      <div class="error ion-padding" color="danger" *ngIf="this.ionicForm.controls?.['name'].errors?.['maxlength']">
+        <ion-text color="danger">El nombre no puede tener más de 50 caracteres</ion-text>
+      </div>
       <div class="ion-padding" color="danger" *ngIf="this.ionicForm.controls?.name.errors?.minlength">
         <ion-text color="danger">El nombre debe ser minimo de dos letras</ion-text>
       </div>
@@ -31,6 +34,9 @@
     <div *ngIf="this.ionicForm.controls?.['composition'].touched && this.ionicForm.controls?.['composition'].invalid">
       <div class="error ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.required">
         <ion-text color="danger">composición de elementos requerida</ion-text>
+      </div>
+      <div class="error ion-padding" *ngIf="this.ionicForm.controls?.['composition'].errors?.['maxlength']">
+        <ion-text color="danger">la composición no puede tener más de 200 caracteres</ion-text>
       </div>
       <div class="ion-padding" *ngIf="this.ionicForm.controls?.composition.errors?.pattern">
         <ion-text color="danger">

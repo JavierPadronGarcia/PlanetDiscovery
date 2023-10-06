@@ -17,11 +17,14 @@
       <ion-input formControlName="name" type="text" aria-label="Name" id="name"></ion-input>
     </ion-item>
     <div *ngIf="this.satelliteForm.controls?.['name'].touched && this.satelliteForm.controls?.['name'].invalid">
-      <div class="ion-padding" *ngIf="this.satelliteForm.controls?.['name'].errors?.['required']">
+      <div class="error ion-padding" *ngIf="this.satelliteForm.controls?.['name'].errors?.['required']">
         <ion-text color="danger">Nombre requerido.</ion-text>
       </div>
-      <div class="ion-padding" color="danger" *ngIf="this.satelliteForm.controls?.['name'].errors?.['minlength']">
+      <div class="error ion-padding" color="danger" *ngIf="this.satelliteForm.controls?.['name'].errors?.['minlength']">
         <ion-text color="danger">El nombre debe ser minimo de dos letras</ion-text>
+      </div>
+      <div class="error ion-padding" color="danger" *ngIf="this.satelliteForm.controls?.['name'].errors?.['maxlength']">
+        <ion-text color="danger">El nombre no puede tener más de 50 caracteres</ion-text>
       </div>
     </div>
 
@@ -34,16 +37,19 @@
       <div class="error ion-padding" *ngIf="this.satelliteForm.controls?.['composition'].errors?.['required']">
         <ion-text color="danger">composición de elementos requerida</ion-text>
       </div>
-      <div class="ion-padding" *ngIf="this.satelliteForm.controls?.['composition'].errors?.['pattern']">
+      <div class="error ion-padding" *ngIf="this.satelliteForm.controls?.['composition'].errors?.['maxlength']">
+        <ion-text color="danger">la composición no puede tener más de 200 caracteres</ion-text>
+      </div>
+      <div class="error ion-padding" *ngIf="this.satelliteForm.controls?.['composition'].errors?.['pattern']">
         <ion-text color="danger">
           El nombre no es válido, la primera letra con mayusculas y las palabras separadas porcomas
         </ion-text>
       </div>
     </div>
     <ion-row>
-      <ion-col>
+      <ion-col class="button-container">
         <ion-button color="danger" (click)="clearForm()" *ngIf="showUpdateButtons">No actualizar</ion-button>
-        <ion-button type="submit" *ngIf="showAddButton">Agregar</ion-button>
+        <ion-button type="submit" *ngIf="showAddButton" [disabled]="!this.satelliteForm.valid">Agregar</ion-button>
         <ion-button (click)="updateSatellite()" *ngIf="showUpdateButtons">Actualizar</ion-button>
       </ion-col>
     </ion-row>

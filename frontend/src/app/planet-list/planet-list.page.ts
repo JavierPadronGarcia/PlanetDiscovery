@@ -44,8 +44,8 @@ export class PlanetListPage implements OnInit {
   ngOnInit() {
     this.getAllPlanets();
     this.ionicForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      composition: ['', [Validators.required, Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
+      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      composition: ['', [Validators.required, Validators.maxLength(200), Validators.pattern('[A-Z][a-z]+(?:,[ ]?[A-Z][a-z]+)*')],
       ],
     });
   }
