@@ -1,6 +1,13 @@
 #container {
   text-align: center;
   top: 3%;
+
+  &#container p {
+    font-size: 16px;
+    line-height: 22px;
+    color: #8c8c8c;
+    margin: 0;
+  }
 }
 
 a {
@@ -8,40 +15,23 @@ a {
 }
 
 #anchor-modify-planets {
-  border-radius: 64px;
-  padding-top: 10px;
-  padding-left: 26px;
-  padding-right: 26px;
-  padding-bottom: 10px;
-  background: var(--ion-color-primary, #3880ff);
-  color: var(--ion-color-primary-contrast, #fff);
   text-wrap: nowrap;
-}
+  border-radius: 64px;
+  padding: 10px 26px;
+  background-color: #3880ff;
+  color: #fff;
 
-#anchor-modify-planets:hover {
-  background: rgb(36, 91, 186);
-}
+  &:hover {
+    background: rgb(36, 91, 186);
+  }
 
-#anchor-modify-planets:focus {
-  background: var(--ion-color-primary-contrast, #fff);
-  opacity: .24;
-}
-
-#anchor-modify-planets:active {
-  background: transparent;
-  opacity: 0;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
+  &:active {
+    background-color: rgb(25, 62, 126);
+  }
 }
 
 #list {
   margin-top: 5%;
-  border: 1px solid red;
 }
 
 #main-label {
@@ -53,10 +43,10 @@ a {
   align-items: center;
   width: 100%;
   gap: 10%;
-}
 
-#planet-container>div:first-child {
-  width: 10%;
+  &#planet-container>div:first-child {
+    width: 10%;
+  }
 }
 
 .icon {

@@ -56,20 +56,20 @@
               *ngIf="iconVisibility[p.id]"></ion-icon>
           </aside>
           <section>
-            <h2>{{p.name}}</h2>
-            <p>composición: {{p.composition}}</p>
-            <section class="button-section">
-              <div>
-                <ion-button (click)="goToModifySatellites(p.id)" shape="round">
-                  Modificar Lunas
-                </ion-button>
-              </div>
-              <div>
-                <ion-button block color="danger" (click)="deletePlanet(p.id)">eliminar</ion-button>
-                <ion-button block color="primary" (click)="putInfoInForm(p)">actualizar</ion-button>
-              </div>
-            </section>
+            <div>
+              <h2>{{p.name}}</h2>
+              <p>composición: {{p.composition}}</p>
+            </div>
+            <div>
+              <ion-button (click)="goToModifySatellites(p.id)" shape="round">
+                Modificar <ion-icon name="moon"></ion-icon>
+              </ion-button>
+            </div>
           </section>
+          <aside class="edit-icons">
+            <ion-icon name="trash" (click)="deletePlanet(p.id)"></ion-icon>
+            <ion-icon name="create" (click)="putInfoInForm(p)"></ion-icon>
+          </aside>
         </div>
 
         <div *ngIf="satelliteVisibility[p.id]" id="satellites-container">
