@@ -50,6 +50,8 @@ The application allows the user to perform the following operations:
 The project was developed following software development best practices. A decoupled architecture was used to separate the backend from the frontend. Additionally, a relational database was used to store planet information.
 </br></br>
 
+The backend was tested with postman, click here to see the [workspace]
+
 ### Built With
 
 * [![Angular][Angular]][Angular-url]
@@ -196,6 +198,7 @@ Project Link: [https://github.com/JavierPadronGarcia/PlanetDiscovery.git](https:
 
 [Ionic icons]: https://ionic.io/ionicons
 [postman]: https://www.postman.com
+[workspace]: https://www.postman.com/javier2/workspace/planetdiscovery-javier-padrn-garca/collection/29809597-f0daeed2-0f0e-447d-989d-d20af08bd46d?action=share&creator=29809597
 
 [Visual Studio Code]: https://code.visualstudio.com
 [eclipse IDE]: https://www.eclipse.org/downloads/
