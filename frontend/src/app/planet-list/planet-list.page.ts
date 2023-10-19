@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PlanetService } from '../services/planet.service';
 import { SatelliteService } from '../services/satellite.service';
 import { Router } from '@angular/router';
+import { PhotoService } from '../services/photo.service';
 
 interface Planet {
   name: string;
@@ -26,6 +27,8 @@ export class PlanetListPage implements OnInit {
   satellites: any = {};
   idToUpdate: number = 0;
   planetId: number = 0;
+  capturedPhoto: any = "";
+  image: string;
 
   iconName: string = 'chevron-down';
   iconUp: string = 'chevron-up';
@@ -42,6 +45,7 @@ export class PlanetListPage implements OnInit {
   constructor(private planetService: PlanetService,
     private satelliteService: SatelliteService,
     public formBuilder: FormBuilder,
+    private photoService: PhotoService,
     private router: Router) { }
 
   ngOnInit() {
@@ -85,36 +89,42 @@ export class PlanetListPage implements OnInit {
     })
   }
 
-  insertPlanet() {
+  async insertPlanet() {
     let planetName = this.ionicForm.get("name");
     let planetComposition = this.ionicForm.get("composition")
+    let blob = null;
+
+    if (this.capturedPhoto != "") {
+      const response = await fetch(this.capturedPhoto);
+      blob = await response.blob();
+    }
 
     let planet: Planet = {
       name: planetName?.value,
       composition: planetComposition?.value
     }
-    this.planetService.add(planet).subscribe(response => {
+    this.planetService.add(planet, blob).subscribe(response => {
       this.getAllPlanets();
       this.clearForm();
     });
   }
 
-  updatePlanet() {
-    let planetName = this.ionicForm.get("name");
-    let planetComposition = this.ionicForm.get("composition")
+  // updatePlanet() {
+  //   let planetName = this.ionicForm.get("name");
+  //   let planetComposition = this.ionicForm.get("composition")
 
-    const planet: Planet = {
-      name: planetName?.value,
-      composition: planetComposition?.value
-    }
+  //   const planet: Planet = {
+  //     name: planetName?.value,
+  //     composition: planetComposition?.value
+  //   }
 
-    this.planetService.update(planet, this.idToUpdate).subscribe(response => {
-      this.getAllPlanets();
-      this.showAddButton = true;
-      this.showUpdateButtons = false;
-      this.clearForm();
-    })
-  }
+  //   this.planetService.update(planet, this.idToUpdate).subscribe(response => {
+  //     this.getAllPlanets();
+  //     this.showAddButton = true;
+  //     this.showUpdateButtons = false;
+  //     this.clearForm();
+  //   })
+  // }
 
   deletePlanet(id: number) {
     this.planetService.delete(id).subscribe(response => {
@@ -123,6 +133,8 @@ export class PlanetListPage implements OnInit {
   }
 
   putInfoInForm(planet: any) {
+    this.capturedPhoto = null;
+    this.image = "http://localhost:8080/images/" + planet.filename
     let planetName = this.ionicForm.get("name")
     let planetComposition = this.ionicForm.get("composition")
 
@@ -138,7 +150,6 @@ export class PlanetListPage implements OnInit {
         top: this.scrollTopContainer.nativeElement.getBoundingClientRect().top
       });
     }
-
   }
 
   clearForm() {
@@ -146,9 +157,27 @@ export class PlanetListPage implements OnInit {
     this.ionicForm.get("composition")?.setValue("")
     this.showAddButton = true;
     this.showUpdateButtons = false;
+    this.image = '';
+    this.capturedPhoto = null;
   }
 
   goToModifySatellites(planetId: string) {
     this.router.navigateByUrl(`modify-satellites/${planetId}`);
+  }
+
+  takePhoto() {
+    this.photoService.takePhoto().then(data => {
+      this.capturedPhoto = data.webPath;
+    });
+  }
+
+  pickImage() {
+    this.photoService.pickImage().then(data => {
+      this.capturedPhoto = data.webPath;
+    });
+  }
+
+  discardImage() {
+    this.capturedPhoto = null;
   }
 }

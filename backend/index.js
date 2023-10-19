@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const db = require("./models");
+
 // normal use. Doesn't delete the database data
 db.sequelize.sync();
 

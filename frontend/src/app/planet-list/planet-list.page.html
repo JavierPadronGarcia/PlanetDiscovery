@@ -7,6 +7,28 @@
 <ion-content [fullscreen]="true" id="container">
 
   <div #scrollTopContainer></div>
+
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="6">
+        <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
+        <ion-img class="photo-frame" *ngIf="!capturedPhoto && !image" src="../../assets/No-Image-Placeholder.svg"
+          (click)="takePhoto()"></ion-img>
+        <ion-img class="photo-frame" *ngIf="!capturedPhoto && image" src="{{image}}" (click)="takePhoto()"></ion-img>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="primary" fill="outline" (click)="pickImage()">
+          <ion-icon slot="start" name="image-outline"></ion-icon>
+          Seleccionar imagen
+        </ion-button>
+        <ion-button color="danger" fill="outline" *ngIf="capturedPhoto" (click)="discardImage()">
+          <ion-icon slot="start" name="aperture"></ion-icon>
+          Descartar imagen
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <div>
     <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
       <ion-item lines="full">
@@ -63,6 +85,9 @@
             </aside>
             <section>
               <div>
+                <ion-avatar slot="start">
+                  <img *ngIf="p.filename" src="http://localhost:8080/images/{{p.filename}}" alt="image" />
+                </ion-avatar>
                 <h2>{{p.name}}</h2>
                 <p>composición: {{p.composition}}</p>
               </div>

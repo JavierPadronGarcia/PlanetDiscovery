@@ -5,7 +5,6 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a new Planet
-  // DECOMMENT:
   router.post("/", upload.single('file'), planet.create);
   // router.post("/", bicycles.create);
 
@@ -21,5 +20,5 @@ module.exports = app => {
   // Delete a Planet with id
   router.delete("/:id", planet.delete);
 
-  app.use("/api/planet", router);
+  app.use("/api/planets", router);
 }

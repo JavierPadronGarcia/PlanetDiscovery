@@ -51,5 +51,5 @@ exports.update = (req, res) => {
 
 // Delete a Planet with the specified id in the request
 exports.delete = (req, res) => {
-
+  
 };

@@ -5,6 +5,7 @@ var storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     var filetype = '';
+
     if (file.mimetype === 'image/gif') {
       filetype = 'gif';
     }
@@ -13,6 +14,9 @@ var storage = multer.diskStorage({
     }
     if (file.mimetype === 'image/jpeg') {
       filetype = 'jpg';
+    }
+    if (file.mimetype === 'image/svg+xml') {
+      filetype = 'svg'
     }
     cb(null, 'image-' + Date.now() + '.' + filetype);
   }
