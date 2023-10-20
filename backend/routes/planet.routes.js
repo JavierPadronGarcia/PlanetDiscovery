@@ -15,7 +15,9 @@ module.exports = app => {
   router.get("/:id", planet.findOne);
 
   // Update a Planet with id
-  router.put("/:id", upload.single('file'), planet.update);
+  router.put("/:id", upload.single('file'), planet.updateWithImage);
+
+  router.put("/noImage/:id", upload.single('file'), planet.updateWithoutImage);
 
   // Delete a Planet with id
   router.delete("/:id", planet.delete);

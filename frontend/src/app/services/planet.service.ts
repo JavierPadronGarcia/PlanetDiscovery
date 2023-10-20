@@ -19,6 +19,7 @@ export class PlanetService {
   }
 
   add(planet: any, blob: any) {
+    console.log(blob)
     let body = new FormData();
     body.append("name", planet.name);
     body.append("composition", planet.composition);
@@ -26,12 +27,17 @@ export class PlanetService {
     return this.httpClient.post(endPoint, body);
   }
 
-  update(planet: any, blob: any, id: number) {
+  update(planet: any, blob: any, id: number, updateImage: boolean) {
     let body = new FormData();
     body.append("name", planet.name);
     body.append("composition", planet.composition);
     body.append("file", blob);
-    return this.httpClient.put(endPoint + `/${id}`, body);
+
+    if (updateImage) {
+      return this.httpClient.put(endPoint + `/${id}`, body);
+    } else {
+      return this.httpClient.put(endPoint + `/noImage/${id}`, body)
+    }
   }
 
   delete(id: number) {

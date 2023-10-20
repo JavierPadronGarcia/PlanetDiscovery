@@ -12,9 +12,8 @@
     <ion-row class="ion-align-items-center">
       <ion-col size="6">
         <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
-        <ion-img class="photo-frame" *ngIf="!capturedPhoto && !image" src="../../assets/No-Image-Placeholder.svg"
+        <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg"
           (click)="takePhoto()"></ion-img>
-        <ion-img class="photo-frame" *ngIf="!capturedPhoto && image" src="{{image}}" (click)="takePhoto()"></ion-img>
       </ion-col>
       <ion-col size="6">
         <ion-button color="primary" fill="outline" (click)="pickImage()">
@@ -87,6 +86,7 @@
               <div>
                 <ion-avatar slot="start">
                   <img *ngIf="p.filename" src="http://localhost:8080/images/{{p.filename}}" alt="image" />
+                  <img *ngIf="!p.filename" src="../../assets/No-Image-Placeholder.svg" alt="image" />
                 </ion-avatar>
                 <h2>{{p.name}}</h2>
                 <p>composición: {{p.composition}}</p>

@@ -12,7 +12,7 @@ module.exports = app => {
 
     // Retrieve a single Satellite with id
     router.get("/:id", satellite.findOne);
-
+    
     // Retrieve all the satellites related to the given planet id
     router.get("/planet/:id", satellite.findByPlanet);
 

@@ -28,7 +28,8 @@ export class PlanetListPage implements OnInit {
   idToUpdate: number = 0;
   planetId: number = 0;
   capturedPhoto: any = "";
-  image: string;
+
+  updateImage: boolean = false;
 
   iconName: string = 'chevron-down';
   iconUp: string = 'chevron-up';
@@ -37,10 +38,7 @@ export class PlanetListPage implements OnInit {
 
   showAddButton: boolean = true;
   showUpdateButtons: boolean = false;
-  showUpdateSatellite: boolean = false;
-  showAddSatellite: boolean = false;
   showSatellites: boolean = false;
-  showAddSatButton: boolean = false;
 
   constructor(private planetService: PlanetService,
     private satelliteService: SatelliteService,
@@ -119,13 +117,12 @@ export class PlanetListPage implements OnInit {
       composition: planetComposition?.value
     }
 
-    if (this.capturedPhoto != "") {
+    if (this.capturedPhoto != "" && this.updateImage) {
       const response = await fetch(this.capturedPhoto);
       blob = await response.blob();
     }
 
-
-    this.planetService.update(planet, blob, this.idToUpdate).subscribe(response => {
+    this.planetService.update(planet, blob, this.idToUpdate, this.updateImage).subscribe(response => {
       this.getAllPlanets();
       this.showAddButton = true;
       this.showUpdateButtons = false;
@@ -140,8 +137,13 @@ export class PlanetListPage implements OnInit {
   }
 
   putInfoInForm(planet: any) {
-    this.capturedPhoto = null;
-    this.image = "http://localhost:8080/images/" + planet.filename
+    this.updateImage = false;
+    if (planet.filename) {
+      this.capturedPhoto = "http://localhost:8080/images/" + planet.filename
+    } else {
+      this.capturedPhoto = "../../assets/No-Image-Placeholder.svg"
+    }
+
     let planetName = this.ionicForm.get("name")
     let planetComposition = this.ionicForm.get("composition")
 
@@ -164,8 +166,7 @@ export class PlanetListPage implements OnInit {
     this.ionicForm.get("composition")?.setValue("")
     this.showAddButton = true;
     this.showUpdateButtons = false;
-    this.image = '';
-    this.capturedPhoto = null;
+    this.capturedPhoto = "";
   }
 
   goToModifySatellites(planetId: string) {
@@ -176,15 +177,18 @@ export class PlanetListPage implements OnInit {
     this.photoService.takePhoto().then(data => {
       this.capturedPhoto = data.webPath;
     });
+    this.updateImage = true;
   }
 
   pickImage() {
     this.photoService.pickImage().then(data => {
       this.capturedPhoto = data.webPath;
     });
+    this.updateImage = true;
   }
 
   discardImage() {
-    this.capturedPhoto = null;
+    this.capturedPhoto = "";
+    this.updateImage = true;
   }
 }

@@ -56,17 +56,15 @@ exports.findOne = (req, res) => {
   })
 }
 
-// Update a Planet by the id in the request
-exports.update = (req, res) => {
-
+// Update the planet with the image
+exports.updateWithImage = (req, res) => {
   const id = req.params.id;
-  const newImageData = req.file;
-  const updatedPlanetData = req.body
+  const newImageData = req.file ? req.file : null;
+  const updatedPlanetData = req.body;
 
   Planet.findOne({ where: { id: id } }).then(planet => {
     if (newImageData) {
       const previousImage = planet.filename;
-
       if (previousImage) {
         const previousImagePath = path.join(__dirname, '../public/images', previousImage)
 
@@ -88,8 +86,24 @@ exports.update = (req, res) => {
   }).catch(err => {
     res.status(500).send({ message: "Error updating the planet, details: " + err });
   });
-
 };
+
+//update a planet without updating the image
+exports.updateWithoutImage = (req, res) => {
+  const id = req.params.id;
+  Planet.findOne({ where: { id: id } }).then(planet => {
+    const updatedPlanetData = req.body;
+
+    planet.name = updatedPlanetData.name || planet.name;
+    planet.composition = updatedPlanetData.composition || planet.composition;
+
+    return planet.save();
+  }).then(() => {
+    res.send({ message: "Planet was updated succesfully" });
+  }).catch(err => {
+    res.status(500).send({ message: "Error updating the planet, details: " + err })
+  })
+}
 
 // Delete a Planet and its image with the specified id in the request
 exports.delete = (req, res) => {
