@@ -21,5 +21,9 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.planet = require("./planet.model.js")(sequelize, Sequelize);
+db.satellite = require("./satellite.model.js")(sequelize, Sequelize);
+
+
+db.planet.hasMany(db.satellite, { foreignKey: 'planet_id' });
 
 module.exports = db;

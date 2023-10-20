@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 });
 
 require("./routes/planet.routes")(app);
+require("./routes/satellite.routes")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

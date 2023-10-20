@@ -1,5 +1,6 @@
 const db = require("../models");
 const Planet = db.planet;
+const Satellite = db.satellite;
 const Op = db.Sequelize.Op;
 const fs = require('fs');
 const path = require('path')
@@ -98,26 +99,67 @@ exports.delete = (req, res) => {
 
     const filename = planet.filename;
 
-    Planet.destroy({ where: { id: id } }).then(num => {
-      if (num == 1) {
-        if (filename) {
-          const imagePath = path.join(__dirname, '../public/images', filename)
-          fs.unlink(imagePath, err => {
-            if (err) {
-              res.status(500).send({
-                message: "Could not delete the planet image. Error details: " + err
-              })
-            }
-          });
-        }
-        res.send({ message: "Planet was deleted succesfully!" })
-      } else {
-        res.send({ message: "Cannot delete the Planet" })
+    //find all satellites to get all the satellite images before the delete of the planet
+    Satellite.findAll({ where: { planet_id: id } }).then(satellites => {
+      let satelliteFiles = [];
+      for (let i = 0; i < satellites.length; i++) {
+        satelliteFiles.push(satellites[i].filename)
       }
+
+      destroyThePlanet(id, filename, satelliteFiles, res);
+
     }).catch(err => {
       res.status(500).send({
-        message: "Could not delete the Planet. Error details: " + err
+        message: err.message || "There was an error finding the satellites"
       })
     })
   })
 };
+
+
+//delete the planet
+destroyThePlanet = (id, filename, satelliteFiles, res) => {
+
+  Planet.destroy({ where: { id: id } }).then(num => {
+    if (num == 1) {
+      //destroy the planet image
+      if (filename) {
+        const imagePath = path.join(__dirname, '../public/images', filename)
+        fs.unlink(imagePath, err => {
+          if (err) {
+            res.status(500).send({
+              message: "Could not delete the planet image. Error details: " + err
+            })
+          }
+        });
+      }
+      if (satelliteFiles != []) {
+        deleteSatelliteImages(satelliteFiles, res);
+      }
+      res.send({ message: "Planet was deleted succesfully!" })
+    } else {
+      res.send({ message: "Cannot delete the Planet" })
+    }
+  }).catch(err => {
+    res.status(500).send({
+      message: "Could not delete the Planet. Error details: " + err
+    })
+  })
+}
+
+
+//destroy the satellite images related to the planet
+deleteSatelliteImages = (satelliteFiles, res) => {
+  satelliteFiles.map(satelliteFile => {
+    if (satelliteFile) {
+      const satelliteImagePath = path.join(__dirname, '../public/images', satelliteFile)
+      fs.unlink(satelliteImagePath, err => {
+        if (err) {
+          res.status(500).send({
+            message: "Could not delete the satellite image. Error details: " + err
+          })
+        }
+      })
+    }
+  })
+}
