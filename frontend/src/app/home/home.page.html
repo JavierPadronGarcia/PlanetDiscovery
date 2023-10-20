@@ -17,6 +17,9 @@
                 *ngIf="iconVisibility[p.id] "></ion-icon>
             </div>
             <div>
+              <ion-avatar slot="start">
+                <img *ngIf="p.filename" src="http://localhost:8080/images/{{p.filename}}" alt="image" />
+              </ion-avatar>
               <h2>{{p.name}}</h2>
               <p>composición: {{p.composition}}</p>
             </div>

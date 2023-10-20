@@ -109,22 +109,29 @@ export class PlanetListPage implements OnInit {
     });
   }
 
-  // updatePlanet() {
-  //   let planetName = this.ionicForm.get("name");
-  //   let planetComposition = this.ionicForm.get("composition")
+  async updatePlanet() {
+    let planetName = this.ionicForm.get("name");
+    let planetComposition = this.ionicForm.get("composition")
+    let blob = null;
 
-  //   const planet: Planet = {
-  //     name: planetName?.value,
-  //     composition: planetComposition?.value
-  //   }
+    const planet: Planet = {
+      name: planetName?.value,
+      composition: planetComposition?.value
+    }
 
-  //   this.planetService.update(planet, this.idToUpdate).subscribe(response => {
-  //     this.getAllPlanets();
-  //     this.showAddButton = true;
-  //     this.showUpdateButtons = false;
-  //     this.clearForm();
-  //   })
-  // }
+    if (this.capturedPhoto != "") {
+      const response = await fetch(this.capturedPhoto);
+      blob = await response.blob();
+    }
+
+
+    this.planetService.update(planet, blob, this.idToUpdate).subscribe(response => {
+      this.getAllPlanets();
+      this.showAddButton = true;
+      this.showUpdateButtons = false;
+      this.clearForm();
+    })
+  }
 
   deletePlanet(id: number) {
     this.planetService.delete(id).subscribe(response => {
