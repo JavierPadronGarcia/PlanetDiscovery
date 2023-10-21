@@ -35,6 +35,21 @@ ion-title {
     font-size: 3rem;
 }
 
+.image-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.image-form-container {
+    width: 50%;
+}
+
+.image-form-buttons {
+    margin-top: 1rem;
+}
+
 #container {
     text-align: center;
     --background: none;
@@ -59,17 +74,32 @@ ion-title {
     display: flex;
     flex-wrap: nowrap;
     padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.satellite-items>label>div:first-child>div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
 
 .satellite-items>label>div:first-child {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
+    align-items: center;
     width: 100%;
 }
 
 .satellite-items>label>div:first-child>* {
     margin: 0;
+}
+
+.satellite-items>label>div:first-child>ion-button {
+    width: 50%;
+    margin-top: 0.5rem;
 }
 
 .edit-buttons {
@@ -106,7 +136,29 @@ ion-title {
     flex-wrap: nowrap;
 }
 
+@media only screen and (min-width: 640px) {
+
+    .image-form {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        padding: 1rem;
+    }
+
+    .image-form-container {
+        width: 40%;
+    }
+
+    .image-form-buttons {
+        margin-top: 1rem;
+    }
+}
+
 @media only screen and (min-width: 768px) {
+
+    .image-form-container {
+        width: 30%;
+    }
 
     #satellite-content {
         display: flex;
@@ -116,6 +168,31 @@ ion-title {
 
     .satellite-items {
         width: 90%;
+    }
+
+    .satellite-items>label>div:first-child {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+    }
+
+    .satellite-items>label>div:first-child>div:first-child {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 30%;
+    }
+
+    .satellite-items>label>div:first-child>* {
+        margin: 0;
+    }
+
+    .satellite-items>label>div:first-child>ion-button {
+        width: 25%;
+        margin-top: 0.5rem;
     }
 }
 
@@ -127,12 +204,16 @@ ion-title {
         width: 100%;
 
         .satellite-items {
-            width: 45%;
+            width: 60%;
         }
     }
 }
 
 @media only screen and (min-width: 1200px) {
+
+    .image-form-container {
+        width: 25%;
+    }
 
     ion-list,
     ion-item {

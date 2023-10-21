@@ -156,13 +156,6 @@ export class ModifySatellitesPage implements OnInit {
     this.router.navigateByUrl(`/change-planet`)
   }
 
-  takePhoto() {
-    this.photoService.takePhoto().then(data => {
-      this.capturedPhoto = data.webPath;
-    })
-    this.updateImage = true;
-  }
-
   pickImage() {
     this.photoService.pickImage().then(data => {
       this.capturedPhoto = data.webPath;

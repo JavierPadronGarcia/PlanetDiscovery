@@ -38,6 +38,21 @@ a {
     text-decoration: none;
 }
 
+.image-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.image-form-container {
+    width: 50%;
+}
+
+.image-form-buttons {
+    margin-top: 1rem;
+}
+
 #anchor-back-home {
     border-radius: 64px;
     padding: 10px;
@@ -113,6 +128,20 @@ a {
     }
 }
 
+.satellites-content {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+
+    &.satellites-content>div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 90%;
+        margin-left: 10%;
+    }
+}
+
 .icon {
     width: 100%;
     font-size: 2rem;
@@ -130,6 +159,21 @@ a {
 
 @media only screen and (min-width: 640px) {
 
+    .image-form {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        padding: 1rem;
+    }
+
+    .image-form-container {
+        width: 40%;
+    }
+
+    .image-form-buttons {
+        margin-top: 1rem;
+    }
+
     .list-container {
         display: flex;
         align-items: center;
@@ -143,6 +187,10 @@ a {
 
 @media only screen and (min-width: 768px) {
 
+    .image-form-container {
+        width: 30%;
+    }
+
     .list {
         width: 90%;
     }
@@ -153,6 +201,7 @@ a {
 }
 
 @media only screen and (min-width: 992px) {
+
     .list-container {
         flex-direction: column;
         align-items: center;
@@ -164,6 +213,10 @@ a {
 }
 
 @media only screen and (min-width: 1200px) {
+
+    .image-form-container {
+        width: 25%;
+    }
 
     ion-list,
     ion-item {

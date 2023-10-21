@@ -16,9 +16,10 @@
               <ion-icon name="{{iconName}}" id="icon{{p.id}}" class="icon" (click)="changeIcon(p.id)"
                 *ngIf="iconVisibility[p.id] "></ion-icon>
             </div>
-            <div>
+            <div class="planet-content">
               <ion-avatar slot="start">
                 <img *ngIf="p.filename" src="http://localhost:8080/images/{{p.filename}}" alt="image" />
+                <img *ngIf="!p.filename" src="../../assets/No-Image-Placeholder.svg" alt="image" />
               </ion-avatar>
               <h2>{{p.name}}</h2>
               <p>composición: {{p.composition}}</p>
@@ -27,9 +28,15 @@
 
           <div *ngIf="satelliteVisibility[p.id]" class="satellites-container">
             <ion-item *ngFor="let sat of satellites[p.id]">
-              <label *ngIf="sat.length != 0">
-                <h3>{{ sat.name }}</h3>
-                <p>composición: {{ sat.composition }}</p>
+              <label *ngIf="sat.length != 0" class="satellites-content">
+                <ion-avatar slot="start">
+                  <img *ngIf="sat.filename" src="http://localhost:8080/images/{{sat.filename}}" alt="image" />
+                  <img *ngIf="!sat.filename" src="../../assets/No-Image-Placeholder.svg" alt="image" />
+                </ion-avatar>
+                <div>
+                  <h3>{{ sat.name }}</h3>
+                  <p>composición: {{ sat.composition }}</p>
+                </div>
               </label>
             </ion-item>
           </div>

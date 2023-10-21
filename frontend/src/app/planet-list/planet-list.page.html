@@ -8,25 +8,23 @@
 
   <div #scrollTopContainer></div>
 
-  <ion-grid>
-    <ion-row class="ion-align-items-center">
-      <ion-col size="6">
-        <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
-        <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg"
-          (click)="takePhoto()"></ion-img>
-      </ion-col>
-      <ion-col size="6">
-        <ion-button color="primary" fill="outline" (click)="pickImage()">
-          <ion-icon slot="start" name="image-outline"></ion-icon>
-          Seleccionar imagen
-        </ion-button>
-        <ion-button color="danger" fill="outline" *ngIf="capturedPhoto" (click)="discardImage()">
-          <ion-icon slot="start" name="aperture"></ion-icon>
-          Descartar imagen
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <section class="image-form">
+    <div class="image-form-container">
+      <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="pickImage()"></ion-img>
+      <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="../../assets/No-Image-Placeholder.svg"
+        (click)="pickImage()"></ion-img>
+    </div>
+    <div class="image-form-buttons">
+      <ion-button color="primary" fill="outline" (click)="pickImage()">
+        <ion-icon slot="start" name="image-outline"></ion-icon>
+        Seleccionar imagen
+      </ion-button>
+      <ion-button color="danger" fill="outline" *ngIf="capturedPhoto" (click)="discardImage()">
+        <ion-icon slot="start" name="aperture"></ion-icon>
+        Descartar imagen
+      </ion-button>
+    </div>
+  </section>
 
   <div>
     <form [formGroup]="ionicForm" (ngSubmit)="insertPlanet()" novalidate>
@@ -105,13 +103,15 @@
 
           <div *ngIf="satelliteVisibility[p.id]" id="satellites-container">
             <ion-item *ngFor="let sat of satellites[p.id]">
-              <label *ngIf="sat.length != 0">
+              <label *ngIf="sat.length != 0" class="satellites-content">
                 <ion-avatar slot="start">
                   <img *ngIf="sat.filename" src="http://localhost:8080/images/{{sat.filename}}" alt="image" />
                   <img *ngIf="!sat.filename" src="../../assets/No-Image-Placeholder.svg" alt="image" />
                 </ion-avatar>
-                <h2>{{ sat.name }}</h2>
-                <p>composición: {{ sat.composition }}</p>
+                <div>
+                  <h2>{{ sat.name }}</h2>
+                  <p>composición: {{ sat.composition }}</p>
+                </div>
               </label>
             </ion-item>
           </div>
