@@ -27,9 +27,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-PlanetDiscovery is a project that consists of a hybrid mobile application developed with Ionic and Angular that consumes a REST API created with Spring Boot. The REST API provides CRUD (Create, Read, Update, Delete) operations on a MySQL database that contains information about planets in the solar system.
+PlanetDiscovery is a project that consists of a hybrid mobile application developed with Ionic and Angular that consumes a REST API created in Nodejs with express. The REST API provides CRUD (Create, Read, Update, Delete) operations on a MySQL database that contains information about planets in the solar system.
 
-The Spring Boot backend is responsible for managing the database and providing CRUD operations through a REST API. The Ionic and Angular frontend is responsible for displaying planet information and allowing the user to perform CRUD operations.
+The backend is responsible for managing the database and providing CRUD operations through a REST API. The Ionic and Angular frontend is responsible for displaying planet information and allowing the user to perform CRUD operations.
 
 The project is divided into two main parts:
 
@@ -56,7 +56,6 @@ The backend was tested with postman, click here to see the [workspace]
 
 * [![Angular][Angular]][Angular-url]
 * [![Ionic][Ionic]][Ionic-url]
-* [![Spring][Spring]][Spring-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -67,8 +66,6 @@ The backend was tested with postman, click here to see the [workspace]
 ### Prerequisites
 
 - Have a text editor like [Visual Studio Code]
-
-- Have an IDE with Spring Boot, i made this project with [eclipse IDE]
 
 - Have installed the lastest lts version of node js
 
@@ -88,53 +85,32 @@ If you don't have node js <a href='https://nodejs.org/en'>click here</a> to inst
    ```
 2. go to the new folder and Install NPM packages
    ```sh
-   cd PlanetDiscovery
+   cd PlanetDiscovery/frontend
    npm install
    ```
 
-3. Prepare the IDE for the backend:
+3. Go to the backend folder and install the npm packages:
 
-    If you have IDE installed with Spring boot 4 <a href="#start-the-project">Click here</a>
-
- - Open eclipse and go to Help:
- 
- <img src="./frontend/src/assets/readmeImages/eclipse.png">
-
- - Find Spring boot and download Spring boot 4:
-
-  <img src="./frontend/src/assets/readmeImages/SpringBootInstall.png">
-
- - Now the installer ask you to accept some things, accept all and continue.
+ ```sh
+   cd PlanetDiscovery/backend
+   npm install
+   ```
 
 <a name="start-the-project"></a>
 
 ### Open the project
 
- Now that we have installed the eclipse, restart it and open the project with the ID. BE CAREFUL, open the project in the main folder, not in the backend.
+ Now we cave installed all the necessary packages we neet to set up the database, to do this follow this steps:
 
- If the project doesn't show like this, go to File / Open Projects from File System:
+4. Start MySQL Workbech and create the database:
 
- <img src="./frontend/src/assets/readmeImages/eclipseProject.png">
+The database is named: "planets"
 
- Go to Choose Dyrectory... and select again the MAIN FOLDER: PlanetDiscovery.
- <br/>
- Now you are going to see the projects under the source, select the project and import, If it doesn't appear again restart the IDE and it will appear
+Now Go to the backend folder and set up your mysql propperties, probably you will need to change the user and the password:
 
- <img src="./frontend/src/assets/readmeImages/eclipseOpenProjectFileSystem.png">
+Go to this folder and change the propperties to yours:
 
-4. Start MySQL Workbech and create the database and tables with the query:
-
-In the project you have a folder named db, inside you will see an sql file, open it with MYSQL Workbench and execute it. I included some demo data.
-<img src="./frontend/src/assets/readmeImages/creatingDatabase.png">
-
-
-Now Go to the eclipse project, src/main/resources and open the application-properties file and write your userName and password
-
-<img src="./frontend/src/assets/readmeImages/eclipseApplicationPropertiesDirectory.png">
-
-The first highlighted line is the database, in this case the database is the same as the created before
-<img src="./frontend/src/assets/readmeImages/eclipseApplicationProperties.png">
-
+<img src="./frontend/src/assets/readmeImages/databasePropperties.png">
 
 Now you have all done, start the proyect in the frontend directory
 
@@ -142,9 +118,11 @@ Now you have all done, start the proyect in the frontend directory
     ionic serve
     ```
 
-And start the backend like the image:
+And start the backend:
 
-<img src="./frontend/src/assets/readmeImages/startingBackend.png">
+  ```sh
+    node index.js
+  ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -153,18 +131,23 @@ And start the backend like the image:
 
 I made a many to one relation in the backend, this is made by taking the foreign key in the table with many and making the relation with the other table like this:
 
-In the model package and the Satellite Class set an attribute with the annotation @ManyToOne and put the getters and setters of it.
+In the js file in the directory: "backend/models/index.js" you will see the models, here i made a many to one relation using one line:
 
 <img src="./frontend/src/assets/readmeImages/manyToOne.png">
 
-Now is the same with the Planet class, add an attribute of Satellite with the annotation @OneToMany and its respective getters and setters but now add @JsonIgnore and the table mapped
- <img src="./frontend/src/assets/readmeImages/oneToMany.png">
 
-Now in the satteliteDao you will need to make the query of some functions, in this case this is the GET of all the satellites that are orbiting the planet by the id
+Here you see that I made a relation with the planet_id collumn, when the project starts, the sequelize read this and create the database automatically
+and create the relations.
 
-<img src="./frontend/src/assets/readmeImages/querySatelliteDAO.png">
+## Save the database data:
 
-And that's all, whe have the tables related, the next thing it to make the crud using the function and others in the Services and Controllers.
+To save the database data you will need to comment and uncomment some lines in the main index.js:
+
+<img src="./frontend/src/assets/readmeImages/saveDataProgress.png">
+
+You will need to uncomment the highlighted line and comment the other lines in the image, and start the backend again.
+
+BE CAREFUL, If you are starting the project for the first time don't change the comments because the non hihglighted lines create the tables in the database.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -193,12 +176,8 @@ Project Link: [https://github.com/JavierPadronGarcia/PlanetDiscovery.git](https:
 [Ionic]:https://img.shields.io/badge/Ionic-%233880FF.svg?style=for-the-badge&logo=Ionic&logoColor=white
 [Ionic-url]: https://ionicframework.com
 
-[Spring]:https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white
-[Spring-url]:https://spring.io
-
 [Ionic icons]: https://ionic.io/ionicons
 [postman]: https://www.postman.com
-[workspace]: https://www.postman.com/javier2/workspace/planetdiscovery-javier-padrn-garca/collection/29809597-f0daeed2-0f0e-447d-989d-d20af08bd46d?action=share&creator=29809597
+[workspace]: https://solar-crater-323676.postman.co/workspace/planets~44001add-1ba8-4d50-b395-2846c91cdb91/collection/29809597-a1e4a24d-0c8e-4280-acb9-5419613880a3?action=share&creator=29809597
 
 [Visual Studio Code]: https://code.visualstudio.com
-[eclipse IDE]: https://www.eclipse.org/downloads/
