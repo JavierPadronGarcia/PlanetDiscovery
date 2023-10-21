@@ -133,7 +133,7 @@ I made a many to one relation in the backend, this is made by taking the foreign
 
 In the js file in the directory: "backend/models/index.js" you will see the models, here i made a many to one relation using one line:
 
-<img src="./frontend/src/assets/readmeImages/manyToOne.png">
+<img src="./frontend/src/assets/readmeImages/manyToOneRelation.png">
 
 
 Here you see that I made a relation with the planet_id collumn, when the project starts, the sequelize read this and create the database automatically
