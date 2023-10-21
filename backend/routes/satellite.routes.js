@@ -12,12 +12,14 @@ module.exports = app => {
 
     // Retrieve a single Satellite with id
     router.get("/:id", satellite.findOne);
-    
+
     // Retrieve all the satellites related to the given planet id
     router.get("/planet/:id", satellite.findByPlanet);
 
     // Update a Satellite with id
-    router.put("/:id", upload.single('file'), satellite.update);
+    router.put("/:id", upload.single('file'), satellite.updateWithImage);
+
+    router.put("/noImage/:id", upload.single('file'), satellite.updateWithoutImage)
 
     // Delete a Satellite with id
     router.delete("/:id", satellite.delete);

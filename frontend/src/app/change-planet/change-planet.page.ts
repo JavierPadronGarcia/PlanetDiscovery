@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PlanetService } from '../services/planet.service';
 import { SatelliteService } from '../services/satellite.service';
 
@@ -14,28 +14,20 @@ export class ChangePlanetPage implements OnInit {
   satellite: any = {};
   planetToAvoid: any
 
-  constructor(private activatedRoute: ActivatedRoute,
-    private planetService: PlanetService,
+  constructor(private planetService: PlanetService,
     private satelliteService: SatelliteService,
     private router: Router) { }
 
   ngOnInit() {
     this.getPlanets();
-    this.planetToAvoid = this.getParam('planetId')
-    this.satellite = {
-      name: this.getParam('name'),
-      composition: this.getParam('composition'),
-      satId: this.getParam('satId')
-    }
+    const localStorageSatellite: any = localStorage.getItem('satellite');
+    this.satellite = JSON.parse(localStorageSatellite);
+    this.planetToAvoid = this.satellite.planet_id;
   }
 
-  getParam(paramToFind: string) {
-    return this.activatedRoute.snapshot.paramMap.get(paramToFind);
-  }
-
-  updateParentPlanet(planetId: number) {
-    this.satelliteService.update(this.satellite, planetId).subscribe(response => {
-      this.backToPlanetList()
+  updateParentPlanet(planetId: string) {
+    this.satelliteService.update(this.satellite, planetId, null, false).subscribe(response => {
+      this.backToPlanetList();
     });
   }
 

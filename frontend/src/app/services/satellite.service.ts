@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-const endPoint = 'http://localhost:8080/satellite';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded'
-  })
-};
+const endPoint = 'http://localhost:8080/api/satellites';
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +15,31 @@ export class SatelliteService {
   }
 
   getAllByPlanet(id: number) {
-    return this.httpClient.get(`${endPoint}/planet_id/${id}`);
+    return this.httpClient.get(`${endPoint}/planet/${id}`);
   }
 
-  add(satellite: any, planetId: number) {
-    let body = new URLSearchParams();
+  add(satellite: any, planetId: number, blob: any) {
+    let body = new FormData();
     body.append("name", satellite.name);
     body.append("composition", satellite.composition);
-    return this.httpClient.post(`${endPoint}/planet_id/${planetId}`, body, httpOptions);
+    body.append("file", blob);
+    return this.httpClient.post(`${endPoint}/${planetId}`, body);
   }
 
-  update(satellite: any, planetId: number) {
-    let body = new URLSearchParams();
+  update(satellite: any, planetId: string, blob: any, updateImage: boolean) {
+    let body = new FormData();
     body.append("name", satellite.name);
     body.append("composition", satellite.composition);
-    body.append("idSat", satellite.satId);
-    return this.httpClient.put(`${endPoint}/planet_id/${planetId}`, body, httpOptions)
+    body.append("blob", blob);
+    body.append("planet_id", planetId);
+
+    console.log(satellite)
+
+    if (updateImage) {
+      return this.httpClient.put(`${endPoint}/${satellite.id}`, body)
+    } else {
+      return this.httpClient.put(`${endPoint}/noImage/${satellite.id}`, body);
+    }
   }
 
   delete(id: number) {

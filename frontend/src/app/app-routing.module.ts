@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: '',
@@ -13,15 +13,15 @@ const routes: Routes = [
   },
   {
     path: 'planet-list',
-    loadChildren: () => import('./planet-list/planet-list.module').then( m => m.PlanetListPageModule)
+    loadChildren: () => import('./planet-list/planet-list.module').then(m => m.PlanetListPageModule)
   },
   {
     path: 'modify-satellites/:planetId',
-    loadChildren: () => import('./modify-satellites/modify-satellites.module').then( m => m.ModifySatellitesPageModule)
+    loadChildren: () => import('./modify-satellites/modify-satellites.module').then(m => m.ModifySatellitesPageModule)
   },
   {
-    path: 'change-planet/:satId/:name/:composition/:planetId',
-    loadChildren: () => import('./change-planet/change-planet.module').then( m => m.ChangePlanetPageModule)
+    path: 'change-planet',
+    loadChildren: () => import('./change-planet/change-planet.module').then(m => m.ChangePlanetPageModule)
   },
 ];
 

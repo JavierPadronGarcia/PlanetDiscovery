@@ -65,11 +65,11 @@ exports.findOne = (req, res) => {
   })
 }
 
-//Update a satellite
-exports.update = (req, res) => {
+//Update a satellite updating the image
+exports.updateWithImage = (req, res) => {
   const id = req.params.id;
   const newImageData = req.file;
-  const updatedSatelliteData = req.body
+  const updatedSatelliteData = req.body;
 
   Satellite.findOne({ where: { id: id } }).then(satellite => {
     if (newImageData) {
@@ -77,12 +77,7 @@ exports.update = (req, res) => {
 
       if (previousImage) {
         const previousImagePath = path.join(__dirname, '../public/images', previousImage)
-
-        fs.unlink(previousImagePath, err => {
-          if (err) {
-            res.status(500).send({ message: "There was an error deleting the previous image" })
-          }
-        })
+        deleteImage(previousImagePath, 'previous', res);
       }
       satellite.filename = newImageData.filename;
     }
@@ -99,6 +94,25 @@ exports.update = (req, res) => {
   });
 }
 
+//Update a satellite except the image
+exports.updateWithoutImage = (req, res) => {
+  const id = req.params.id;
+  const updatedSatelliteData = req.body;
+
+  console.log(req.body)
+
+  Satellite.findOne({ where: { id: id } }).then(satellite => {
+    satellite.name = updatedSatelliteData.name || satellite.name;
+    satellite.composition = updatedSatelliteData.composition || satellite.composition;
+    satellite.planet_id = updatedSatelliteData.planet_id || satellite.planet_id;
+    return satellite.save();
+  }).then(() => {
+    res.send({ message: "Satellite was updated sucesfuly" });
+  }).catch(err => {
+    res.status(500).send({ message: "Error updating the satellite, details: " + err })
+  })
+}
+
 //Delete a satellite
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -111,13 +125,7 @@ exports.delete = (req, res) => {
       if (num == 1) {
         if (filename) {
           const imagePath = path.join(__dirname, '../public/images', filename)
-          fs.unlink(imagePath, err => {
-            if (err) {
-              res.status(500).send({
-                message: "Could not delete the satellite image. Error details: " + err
-              })
-            }
-          });
+          deleteImage(imagePath, 'satellite', res);
         }
         res.send({ message: "Satellite was deleted succesfully!" })
       } else {
@@ -128,5 +136,15 @@ exports.delete = (req, res) => {
         message: "Could not delete the Satellite. Error details: " + err
       })
     })
+  })
+}
+
+deleteImage = (imagePath, messageName, res) => {
+  fs.unlink(imagePath, err => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not delete the " + messageName + " image. Error details: " + err
+      })
+    }
   })
 }
